@@ -1,0 +1,143 @@
+@charset "utf-8"
+
+/**
+ * 重置饿了么UI
+ */
+.app
+
+  // 通用模态框
+  .el-dialog
+    overflow: hidden
+    border-radius: .15rem
+
+    .el-dialog__header
+      padding: .4rem .9rem
+      background-color: #84B5F0
+
+    .el-dialog__headerbtn
+      right: .7rem
+      margin-top: -.65rem
+      font-size: 1.2rem
+
+    .el-dialog__title
+      color: #FFFFFF
+      font-size: .75rem
+
+    .el-dialog__close
+      color: #FFFFFF
+
+    .el-dialog__body
+      padding: .9rem
+
+    .el-dialog__footer
+      padding: 0 .9rem .9rem
+      position: relative
+
+    .el-form
+      width: 100%
+
+    .el-button
+      min-width: 5.6rem
+      padding: 0 .9rem
+      font-size: .7rem
+
+    .el-pagination
+      width: auto
+      padding: 0 0 0 5rem
+
+    // 其它
+    .search
+      margin: 0 0 .9rem
+
+    .deal
+      position: absolute
+      top: 0
+      left: 1rem
+      line-height: 1.7rem
+      a
+        margin-right: .5rem
+
+  // 文件模态框
+  .modal-file
+    td
+      &:last-child
+        width: 14.6rem
+        padding-left: .9rem
+        border-left: .05rem dashed #999
+      strong
+        display: block
+        margin-bottom: .9rem
+        color: #333
+      p
+        margin-bottom: .5rem
+        color: #5E9EEB
+
+    .el-dialog__body
+      padding: .9rem .9rem 1.8rem
+
+    #city .el-select
+      width: 5.3rem
+      margin-right: .3rem
+      &:last-child
+        margin: 0
+
+    .el-upload-list
+      width: 100%
+
+    .el-upload__tip
+      color: #0BCAB5
+
+  // 确认模态框
+  .modal-confirm
+
+    .el-dialog__body
+      display: flex
+      justify-content: center
+      align-items: center
+      min-height: 2.85rem
+      color: #606266
+      font-size: .7rem
+
+    .el-dialog__footer
+      text-align: center
+      padding: 0 0 1.5rem
+
+  // 穿梭框
+  .modal-transform
+    overflow: hidden
+      y: auto
+    height: 24rem
+
+    .content
+      float: right
+      overflow: hidden
+        y: auto
+      width: 28.5rem
+      height: 100%
+      padding: 0 .5rem 0 .85rem
+      border-left: .05rem solid #DFDFDF
+      dt
+        margin-bottom: .9rem
+        color: #333
+        font-weight: bold
+        font-size: .9rem
+
+    .el-transfer
+      float: left
+      height: 100%
+
+    .el-transfer-panel,
+    .el-transfer-panel__body
+      height: 100%
+
+    .el-transfer-panel__list.is-filterable
+      height: 18.8rem
+
+    .el-button
+      padding: .5rem
+
+    .el-input__inner
+      padding-left: 1.2rem
+
+    .el-transfer-panel__item
+      display: block

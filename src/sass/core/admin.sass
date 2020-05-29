@@ -1,0 +1,264 @@
+@charset "utf-8"
+
+/**
+ * 教务管理
+ */
+.teacher,
+.student,
+.classroom,
+.kaoqin
+  @extend %container
+
+%details
+  td
+    span.ms, span.at
+      float: left
+      padding-left: .9rem
+      margin-right: .6rem
+      background: url('../assets/icon/music.png') 0 50% no-repeat
+        size: .7rem
+    span.at
+      background-image: url('../assets/icon/art.png')
+
+  // 底部
+  .bot
+    position: relative
+    a.del
+      position: absolute
+      top: 0
+      left: 0
+      padding: 0 1rem 0 .85rem
+      line-height: 1.7rem
+
+      .el-icon-close:before
+        color: #FF6474
+        font-size: 1rem
+
+/**
+ * 老师管理
+ */
+.teacher
+  @extend %details
+  .mar_left
+    margin-left: 1.5rem
+  .master 
+    background: url('../assets/xianxia.png') center left no-repeat
+    background-size: contain
+    div
+      text-indent:  1.5rem
+/**
+ * 学生管理
+ */
+.student
+  @extend %details
+
+/**
+ * 班级管理
+ */
+.classroom
+  @extend %details
+
+/**
+ * 考勤管理
+ */
+.kaoqin
+  @extend %details
+
+  // 课程
+  .ke
+    padding: 1rem
+    dt
+      overflow: hidden
+      h3
+        float: left
+        width: 4.5rem
+        font-size: .8rem
+      ul
+        overflow: hidden
+        li
+          overflow: hidden
+          &:last-child
+            margin-top: .6rem
+        div
+          float: left
+          margin-right: 1rem
+          &:before
+            float: left
+            content: ""
+          &.chu:before,
+          &.que:before
+            width: .8rem
+            height: .8rem
+            margin: .1rem .6rem 0 .2rem
+            border-radius: .4rem
+            background-color: #84B5F0
+          &.que:before
+            background-color: #C7C7C7
+          &.ti:before
+            width: 1.1rem
+            height: .95rem
+            margin-right: .6rem
+            background-image: url('../assets/icon/kaoti.png')
+    dd
+      padding: 1.5rem 0 0 4.5rem
+      ul
+        overflow: hidden
+        margin-bottom: 2rem
+        li
+          @extend %clearfix
+          float: left
+          width: 10rem
+          &.none
+            h3
+              color: #C7C7C7
+              i
+                background-image: url('../assets/icon/kaoque.png')
+            .score
+              a
+                cursor: default
+                &.add
+                  background-image: url('../assets/icon/kaoadd2.png')
+                &.cut
+                  background-image: url('../assets/icon/kaocut2.png')
+              div
+                color: #AAAAAA
+          h3
+            font-size: .8rem
+            line-height: 2.5rem
+            i
+              float: left
+              width: 2.5rem
+              height: 2.5rem
+              margin-right: .8rem
+              background-image: url('../assets/icon/kaochu.png')
+              cursor: pointer
+              &.n
+                cursor: default
+          button
+            margin-top: 1rem
+            border: .1rem solid #C7C7C7
+              radius: .2rem
+            color: #333333
+            cursor: default
+
+    .score
+      width: 5.3rem
+      padding: 1rem .5rem 2rem
+      font-size: .8rem
+      line-height: 1.5rem
+      text-align: center
+      div
+        overflow: hidden
+      a
+        width: 1.5rem
+        height: 1.5rem
+        &.add
+          float: left
+          background-image: url('../assets/icon/kaoadd.png')
+        &.cut
+          float: right
+          background-image: url('../assets/icon/kaocut.png')
+        &.disadd
+          float: left
+          background-image: url('../assets/icon/kaoadd2.png')
+        &.discut
+          float: right
+          background-image: url('../assets/icon/kaocut2.png')
+
+
+    .column
+      margin-bottom: 1.5rem
+
+      .el-radio-group
+        display: block
+        margin-top: .8rem
+        line-height: 1.2rem
+
+
+/**
+ * 社团管理
+ */
+.group
+  @extend %details
+  .edit
+    .w220
+      width: 11rem
+    .el-select
+      width: 11rem
+    .head-img
+      max-height: 15rem
+    .add-btn
+      display: inline-block
+      width: 1.75rem
+      height: 1.75rem
+      background: #5E9EEB
+      text-align: center
+      border-radius: 50%
+      color: #fff
+    .class-list
+      display: flex
+      margin: 0.5rem 0
+      .class-item
+        height: 1.5rem
+        line-height: 1.5rem
+        margin-right: 0.5rem
+        padding: 0 1rem
+        border-radius: 0.5rem
+        background: #ebf6fc
+        color: #5E9EEB
+        border: 1px solid #5E9EEB
+      .class-item-active
+        background: url('../assets/icon/checked.png') right bottom no-repeat
+        background-color: #5E9EEB
+        color: #fff
+  .redTd
+    padding: .2rem 0.5rem
+    background: red
+    color: #fff
+    cursor: pointer
+  .grayTd
+    padding: .2rem 0.5rem
+    background:#C6C6B9
+    color: #fff
+
+/**
+ * 校外实践
+ */
+.practice
+  .edit
+    .cli-btn
+      cursor: pointer
+      color:#5E9EEB
+    .cont
+      .model
+        .model-tip
+          font-size: 1rem
+          margin: 1rem 0
+          font-weight: bold
+        .active-list
+          display: flex
+          .active-item
+            width: 14rem
+            border-radius: 0.4rem
+            padding: 0.5rem
+            background: #fff
+            margin-right: 1rem
+            .active-no
+              font-size: 0.9rem
+              color:#5E9EEB
+            .row-item
+              // display: flex
+              margin: 0.5rem
+              .row-label
+                width: 5rem
+                flex-shrink: 0
+                font-weight: bold
+              .row-cont
+                color:#666666
+            .img-list
+              display: flex
+              justify-content: space-around
+              flex-wrap: wrap
+              img 
+                width: 4rem
+                height: 4rem

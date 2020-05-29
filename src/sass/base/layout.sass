@@ -1,0 +1,134 @@
+@charset "utf-8"
+
+/**
+ * 顶部
+ */
+.header
+  position: relative
+  height: 3rem
+  background-color: #84B5F0
+  a.logo
+    float: left
+    width: 6.1rem
+    height: 2rem
+    margin: .5rem 2.2rem 0 1rem
+    background: url('../assets/logo.png') 0 50% no-repeat
+      size: contain
+  h1
+    float: left
+    font-size: .85rem
+    line-height: 3rem
+    color: #FFFFFF
+
+  // 更多内容
+  .more
+    position: absolute
+    top: 0
+    right: 0
+    font-size: .7rem
+    line-height: 3rem
+    color: #FFFFFF
+    span
+      float: left
+      margin-left: 1.2rem
+    a
+      float: left
+      padding: 0 1.2rem
+      color: #FFFFFF
+      cursor: pointer
+      &:hover
+        text-decoration: underline
+
+/**
+ * 容器
+ */
+.container
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+
+/**
+ * 内容
+ */
+.contain
+  position: relative
+  height: 100%
+  margin-left: 7.7rem
+  iframe
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background-color: #FFFFFF
+
+  // 视图
+  .transition
+    height: 100%
+
+/**
+ * 导航
+ */
+.navigater
+  position: relative
+  z-index: 10
+  overflow: hidden
+    y: auto
+  float: left
+  width: 7.1rem
+  height: 100%
+  background-color: #FFFFFF
+  button
+    display: block
+    width: 100%
+    height: 7.8rem !important
+    color: #B4B4B4
+    font-size: 1rem !important
+    background-color: #FFFFFF !important
+    border: none
+    transition: color .2s ease
+    &:before
+      display: block
+      width: 3.7rem
+      height: 3.7rem
+      margin: 0 auto .6rem
+      background-image: url('../assets/picture/nav1.png')
+      content: ""
+    &:hover
+      color: #5E9EEB
+      &:before
+        background-position: 0 -3.7rem
+    &.active
+      color: #5E9EEB
+      &:before
+        background-position: 0 -7.4rem
+    &.nav2:before
+      background-image: url('../assets/picture/nav2.png')
+    &.nav3:before
+      background-image: url('../assets/picture/nav3.png')
+    &.nav4:before
+      background-image: url('../assets/picture/nav4.png')
+
+/**
+ * 导航连接
+ */
+.navigater-lnk
+  padding: .3rem 0
+  margin: -.5rem
+  background-color: #84B5F0
+  a
+    display: block
+    padding: 0 1rem
+    color: #FFFFFF
+    font-size: .75rem
+    line-height: 1.8rem
+    &:hover
+      text-decoration: underline
+    &.active
+      color: #84B5F0
+      border-radius: .3rem
+      background-color: #FFFFFF
+      &:hover
+        text-decoration: none

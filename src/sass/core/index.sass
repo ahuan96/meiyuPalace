@@ -1,0 +1,236 @@
+@charset "utf-8"
+
+/**
+ * 工作台
+ */
+.index
+  @extend %container
+  overflow-y: auto
+
+  // 标题
+  .title
+    height: 8rem
+    background-color: #FFFFFF
+  
+    .r
+      height: 6rem
+      margin: 1rem 0 0
+      li
+        float: left
+        -webkit-box-pack: center
+        -webkit-box-align: center
+        display: -webkit-box
+        width: 6rem
+        height: 6rem
+        margin-right: 1.2rem
+        color: #FFFFFF
+        font-size: .85rem
+        line-height: 1.8rem
+        text-align: center
+        background-color: #79B7C6
+        border-radius: .5rem
+        &.sq2
+          background-color: #7EB6F8
+        &.sq3
+          background-color: #E792B8
+      strong
+        display: block
+        font-weight: normal
+      i
+        font-size: 1.2rem
+
+  // 照片
+  .photo
+    overflow: hidden
+    padding: 1rem 1.2rem 0
+
+    .pic
+      overflow: hidden
+      img
+        float: left
+        margin-right: 1rem
+        border-radius: 2rem
+      h3
+        overflow: hidden
+        height: 2.4rem
+        font-size: 1rem
+        line-height: 2.4rem
+      span
+        float: left
+        margin-right: 1rem
+        color: #B8B8B8
+        font-size: .75rem
+      .exit-btn
+        float: none
+        color:#5E9EEB
+        cursor: pointer
+    .txt
+      margin-top: 1rem
+      color: #B8B8B8
+      font-size: .75rem
+
+  // 连接
+  .link
+    overflow: hidden
+    padding-top: .8rem
+    a
+      float: left
+      padding: 0 .8rem 0 2.1rem
+      margin-right: .7rem
+      color: #5E9EEB
+      font-size: .75rem
+      line-height: 1.9rem
+      background: url('../assets/icon/help2.png') .5rem 40% no-repeat #FFFFFF
+      &.lk2
+        background-image: url('../assets/icon/help3.png')
+      &.lk3
+        background-image: url('../assets/icon/help4.png')
+      border: .05rem solid #7EB6F8
+        radius: .1rem
+
+  // 框架
+  .over
+    dt
+      overflow: hidden
+      margin: .5rem 0 0 .05rem
+      line-height: 2.6rem
+      h3
+        float: left
+        margin-right: 2rem
+        font-size: .75rem
+        &:before
+          float: left
+          width: .2rem
+          height: 1.3rem
+          margin: .6rem .6rem 0 0
+          background-image: url('../assets/icon/over.png')
+          content: ""
+      a.r
+        margin-right: 1rem
+        color: #999999
+        font-size: .65rem
+        &:after
+          content: " >>"
+        &:hover
+          text-decoration: underline
+
+    .lnk a
+      margin-right: 1rem
+      color: #999999
+      font-size: .65rem
+      &.active
+        color: #84B5F0
+
+  // 待验收练习
+  .shou
+    margin-right: 1rem
+    li
+      height: 3.2rem
+      padding: 0 1rem
+      margin-bottom: .4rem
+      background-color: #FFFFFF
+      &:last-child
+        margin: 0
+
+    .tit
+      padding-top: .3rem
+      font-size: .65rem
+      line-height: 1.5rem
+      i
+        float: right
+        margin-left: .7rem
+        color: #B8B8B8
+      a
+        display: block
+        overflow: hidden
+        white-space: nowrap
+        color: #333333
+        text-overflow: ellipsis
+        &:hover
+          text-decoration: underline
+
+    .bot
+      overflow: hidden
+      font-size: .65rem
+      span
+        float: right
+        margin-left: .7rem
+      section
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
+        margin-right: .7rem
+        &:before
+          margin-right: .2rem
+          content: "布置班级："
+
+  // 未读消息
+  .mes
+    height: 9.5rem
+    padding: .45rem 1rem
+    font-size: .65rem
+    line-height: 1.9rem
+    background-color: #FFFFFF
+    li
+      overflow: hidden
+    i
+      float: right
+      margin-left: .7rem
+      color: #B8B8B8
+    span
+      float: left
+      margin-right: .7rem
+      color: #5E9EEB
+    a
+      display: block
+      overflow: hidden
+      white-space: nowrap
+      color: #333333
+      text-overflow: ellipsis
+      &:hover
+        text-decoration: underline
+
+  // 学情统计
+  .tong
+    overflow: hidden
+    li
+      float: left
+      width: 10.9rem
+      height: 5.8rem
+      margin: 0 1rem .7rem 0
+      background-color: #FFFFFF
+      border-left: .1rem solid #79B7C6
+      &.tg2
+        border-color: #7EB6F8
+        h4:before
+          background-image: url('../assets/icon/tong2.png')
+      &.tg3
+        border-color: #E792B8
+        h4:before
+          background-image: url('../assets/icon/tong3.png')
+    h4
+      font-size: .75rem
+      line-height: 2.9rem
+      &:before
+        float: left
+        width: 1.35rem
+        height: 1.35rem
+        margin: .7rem .5rem 0 .75rem
+        background-image: url('../assets/icon/tong1.png')
+        content: ""
+    p
+      font-size: 1.2rem
+      text-align: center
+
+  // 其他
+  .clearfix .over
+    float: left
+    width: 50%
+
+  .el-table i.none
+    display: block
+    width: 1rem
+    height: 1rem
+    margin-left: .2rem
+    background: url('../assets/icon/noclick.png')
+      size: contain

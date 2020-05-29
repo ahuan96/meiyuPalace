@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+<meta http-equiv="Access-Control-Allow-Origin" content="*" />
+
+<title>艺术素质评测与学习平台（美育老师端）</title>
+<meta name="keywords" content="艺术评测，教育信息化，中小学，大数据, 互联网, 平台服务, 教育," />
+<meta name="description" content="南京新知艺测科技有限公司，智慧教育领航企业，智慧课堂，艺术素质教育综合平台，人工智能在线教育平台" />
+
+<base target="_self" />
+<link href="http://sucai.xinzhimeiyu.com/static/images/yishu.ico" rel="icon" />
+
+<script>
+(function (){
+  var lnk = window.location.href;
+  if (lnk.indexOf('localhost') > -1) {
+    return
+  };
+
+  if (lnk.indexOf('test') > -1) {
+    var url = 'http://test.login.xinzhimeiyu.com/';
+    var sid = 'test_p_token';
+  } else {
+    var url = 'http://login.xinzhimeiyu.com/';
+    var sid = 'release_p_token';
+  };
+
+  var reg = new RegExp('(^| )' + sid + '=([^;]*)(;|$)')
+  var bak = document.cookie.match(reg)
+  var val = bak ? unescape(bak[2]) : null
+  if (val === null) {
+    window.location.href = url
+  }
+})()
+</script>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/**
+ * [Global 全局参数方法]
+ */
+var Global = {
+  database: {}, // 用户信息
+
+  /**
+   * [roomsets 设置教室信息]
+   * @param  {[String]} id [教室ID]
+   * @param  {[String]} name [教室名]
+   * @return {[]} []
+   */
+  roomsets: function (id, name) {
+    Global.database.roomId = id
+    Global.database.roomName = name
+  },
+
+  urlsets: null // 连接跳转方法
+}
+
+// 请求教室信息
+if (window.client !== undefined && window.client.GetClassInfo !== undefined) {
+  window.client.GetClassInfo()
+} else {
+  Global.roomsets(null, null)
+}
+</script>
+</body>
+</html>

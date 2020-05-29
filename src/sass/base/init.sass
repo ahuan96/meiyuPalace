@@ -1,0 +1,153 @@
+@charset "utf-8"
+
+/**
+ * 基础样式
+ */
+html,
+body
+  overflow: hidden
+  min-width: 51.2rem
+  height: 100%
+  font-size: 20px
+body
+  color: #333333
+  font:
+    size: .65rem
+    family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif
+  line-height: 1.05rem
+  background: #F0F0F0
+
+::-webkit-scrollbar
+  width: .6rem
+  height: .6rem
+::-webkit-scrollbar-track
+  background-color: #FFFFFF
+::-webkit-scrollbar-thumb
+  border-radius: .3rem
+  background-color: #D0D0D0
+  &:hover
+    background-color: #999999
+
+*
+  margin: 0
+  padding: 0
+
+li
+  list-style: none
+
+a,
+a:link,
+a:hover,
+a:active,
+a:visited
+  color: #5E9EEB
+  text-decoration: none
+  cursor: pointer
+
+h1,
+h2,
+h3,
+h4,
+b
+  font-weight: normal
+
+em,
+i
+  font-style: normal
+
+img
+  border: none
+
+p
+  margin: 0
+
+input,
+textarea,
+button
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif
+  outline: none
+  box-sizing: border-box
+textarea
+  resize: none
+
+/**
+ * 全局类样式
+ */
+%container
+  position: relative
+  overflow: hidden
+  height: 100%
+
+  // 主区域
+  .main,
+  .edit
+    position: absolute
+    top: 2.95rem
+    right: 0
+    bottom: 0
+    left: 0
+    overflow:
+      x: hidden
+      y: auto
+
+  // 编辑
+  .edit
+    top: 0
+    padding-bottom: 1.5rem
+    background-color: #FFFFFF
+    h2
+      margin: 1.7rem 2rem
+      font-size: .9rem
+
+    .el-button
+      height: 2rem
+      padding: 0 1.5rem
+      font-size: .8rem
+
+  // 报告
+  .port
+    overflow-y: auto
+    height: 100%
+    padding: 0 .5rem 0 .9rem
+
+  // 长表单
+  .long
+    overflow: hidden
+
+    .mid
+      position: absolute
+      top: 0
+      right: 0
+      bottom: 3.75rem
+      left: 0
+
+    .bot
+      position: absolute
+      right: 0
+      bottom: 0
+      left: 0
+      border-top: .05rem solid #F0F0F0
+      a.del
+        top: 1rem
+
+    .el-table__fixed-right-patch
+      height: 2.25rem !important
+      border: none
+
+/**
+ * 其它类样式
+ */
+%clearfix
+  zoom: 1
+  &:after
+    height: 0
+    visibility: hidden
+    display: block
+    clear: both
+    content: ""
+
+%clear
+  height: 0
+  overflow: hidden
+  font-size: 0
+  clear: both

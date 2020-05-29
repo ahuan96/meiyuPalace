@@ -1,0 +1,346 @@
+@charset "utf-8"
+
+/**
+ * 搜索UI
+ */
+.search
+  @extend %clearfix
+  position: relative
+  margin: .6rem 0
+  li
+    float: left
+    margin-right: .4rem
+    &.select
+      width: 4.7rem
+    &.input
+      width: 6.3rem
+    &.text
+      width: 100%
+      padding: 0 1rem
+      margin: 0
+      box-sizing: border-box
+      font-size: .75rem
+      line-height: 1.75rem
+      background-color: #FFFFFF
+      div
+        float: left
+        margin-right: 1.2rem
+    &.last
+      position: absolute
+      top: 0
+      right: .2rem
+
+      .el-button
+        width: 4.5rem
+
+      .el-select
+        width: 4.7rem
+
+  .el-input__inner
+    padding-right: 1.2rem !important
+    border: none !important
+
+  .el-select
+    float: left
+    margin-right: .4rem
+    &:last-child
+      margin: 0
+
+  .el-button
+    float: left
+    width: 3.1rem
+    min-width: auto !important
+    padding: 0 !important
+
+/**
+ * 提交UI
+ */
+.submit
+  margin: 1rem 0
+
+/**
+ * 失败UI
+ */
+.failed
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  z-index: 1000
+  background: url('../assets/404.png') 50% no-repeat #FFFFFF
+
+/**
+ * 自定义表格UI
+ */
+.tb
+  margin: 1rem
+  td
+    padding: .4rem 0
+    border:
+      right: 1px solid #C7C7C7
+      bottom: 1px solid #C7C7C7
+    &.lan, &.lan2
+      color: #FFFFFF
+      font-size: .8rem
+      line-height: 2rem
+      text-align: center
+      background-color: #7DA6D8
+      border:
+        right: 1px solid #FFFFFF
+        bottom: 1px solid #FFFFFF
+    &.lan2
+      font-size: .65rem
+      line-height: 1.1rem
+    &.cen
+      text-align: center
+    &.txt
+      padding: .4rem .6rem
+
+/**
+ * 其它UI
+ */
+.clearfix
+  zoom: 1
+  &:after
+    height: 0
+    visibility: hidden
+    display: block
+    clear: both
+    content: ""
+
+.l
+  float: left
+
+.r
+  float: right
+
+/**
+ * 重置饿了么UI
+ */
+.app
+  position: relative
+  height: 100%
+
+  // 输入框
+  .el-input,
+  .el-select
+
+    .el-input__inner
+      display: block
+      height: 1.75rem
+      padding: 0 .5rem
+      color: #444444
+      font-size: .65rem
+      border: .05rem solid #CCCCCC
+
+    .el-input__icon
+      color: #444444
+      line-height: 1.8rem
+
+  .el-input,
+  .el-textarea
+    padding: .05rem 0 .1rem
+
+  .el-textarea
+
+    .el-textarea__inner
+      height: 5.1rem
+      padding: .3rem .5rem
+      color: #444444
+      font-size: .65rem
+      line-height: 1.1rem
+      border: .05rem solid #CCCCCC
+      resize: none
+
+  .el-date-editor .el-input__inner
+    padding-left: 1.5rem
+    cursor: default
+
+  // 下拉框
+  .el-select
+    ::-webkit-input-placeholder
+      color: #444444
+
+  .el-select-dropdown .popper__arrow
+    transform: none
+
+  .el-select-dropdown__item.selected
+    font-weight: normal
+
+  // 单选框
+  .el-radio-button__inner
+    padding: .45rem 1rem .5rem
+
+  // 多选框
+  .el-checkbox__label
+    line-height: 1
+
+  // 按钮
+  .el-button
+    height: 1.75rem
+    padding: 0
+    font-size: .65rem
+
+  // 翻页
+  .el-pagination
+    width: 100%
+    padding: 0
+    padding: 1rem 0
+    text-align: center
+    background-color: #FFFFFF
+
+    .el-pager li
+      min-width: 1.7rem
+      height: 1.7rem
+      margin: 0 .1rem
+      font-weight: normal
+      line-height: 1.7rem
+      background-color: #FFFFFF
+      border: .05rem solid #CCCCCC
+      &:first-child
+        margin-left: 0
+      &.active
+        border: none
+
+    .el-pagination__jump
+      height: 1.7rem
+      margin: 0 .7rem
+      line-height: 1.7rem
+
+    .el-pagination__total
+      height: 1.7rem
+      margin: 0 .5rem
+      line-height: 1.7rem
+
+    .el-input__inner
+      height: 1.7rem
+      padding: 0
+
+  // 表格
+  .el-table
+    &:before
+      display: none
+    th,
+    td
+      padding: 0
+      &:last-child .cell
+        padding-right: 1rem
+    th
+      height: 2.7rem
+      color: #777777
+      font-weight: normal
+      font-size: .75rem
+      div.cell
+        padding: 0 0 0 .95rem
+    td
+      height: 2.4rem
+      div.cell
+        padding: .25rem 0 .25rem 1rem
+        line-height: 1rem !important
+    em
+      display: inline-block
+      width: .05rem
+      height: .7rem
+      margin: 0 .2rem
+      vertical-align: sub
+      background-color: #CCCCCC
+      content: ""
+
+    .el-table__fixed:before,
+    .el-table__fixed-right:before
+      display: none
+
+  // 表单
+  .el-form
+    small
+      margin: 0 .5rem
+      font-size: .65rem
+
+    .el-form-item
+      margin-bottom: .8rem
+
+    .el-form-item__content
+      line-height: 1.85rem
+
+    .el-form-item__label
+      color: #333333
+      font-size: .7rem
+      line-height: 1.9rem
+      &:before
+        font-size: .8rem
+        line-height: 1rem
+      &:after
+        content: "："
+
+    .el-radio__inner
+      margin-top: -.05rem
+
+    .el-form-item__error
+      padding: .05rem .1rem
+
+  // 范围编辑器
+  .el-range-editor
+    width: 14rem
+
+    .el-range-input
+      width: 5rem
+      background: none
+
+    .el-range__icon,
+    .el-range-separator
+      line-height: 2rem
+
+    .el-range__close-icon
+      display: none
+  .el-date-editor--datetimerange
+    width: 18rem
+    .el-range-input
+      width: 7rem
+  // 底线
+  .el-divider
+    width: 80%
+    margin: 3rem auto 2rem
+    div
+      color: #999999
+
+  // 吸顶盒
+  .sticky-box
+    z-index: 1000
+
+/**
+ * 重置饿了么提示UI
+ */
+.el-tooltip__popper.is-light
+  border-color: #999999
+
+  .list
+    line-height: 1rem
+    p:before
+      float: left
+      width: .5rem
+      height: .5rem
+      margin: .2rem .4rem 0 0
+      border-radius: .25rem
+      background-color: #333333
+      content: ""
+
+/**
+ * 重置饿了么单选组UI
+ */
+.el-radio-group
+  &.onlyline
+    label
+      display: block
+      height: 1.5rem
+
+/**
+ * 重置淡入淡出动画UI
+ */
+.fade-enter-active,
+.fade-leave-active
+  transition: all .2s ease
+
+.fade-enter,
+.fade-leave-active
+  opacity: 0
