@@ -182,7 +182,7 @@ export default {
      * @return {[]} []
      */
     askDatas (cbk) {
-      let $rt = this.$get('meiyu/getOrganization/', this.params)
+      let $rt = this.$get('palace_org/getOrganization/', this.params)
       $rt.then((rt) => {
         // 学生数据
         this.items = rt.data.studentList
@@ -394,7 +394,7 @@ export default {
         return
       }
       var param = {'student_id': data.student_id, 'org_id': this.org_id, 'field': 'point', 'content': e.currentTarget.value}
-      let $rt = this.$get('meiyu/alterStudentField/', param)
+      let $rt = this.$get('palace_org/alterStudentField/', param)
       $rt.then((rt) => {
         console.log('rt1', rt)
         this.$message({
@@ -408,7 +408,7 @@ export default {
     },
     ChangeRemark (e, data) {
       var param = {'student_id': data.student_id, 'org_id': this.org_id, 'field': 'remark', 'content': e.currentTarget.value}
-      let $rt = this.$get('meiyu/alterStudentField/', param)
+      let $rt = this.$get('palace_org/alterStudentField/', param)
       $rt.then((rt) => {
         console.log('rt1', rt)
         this.$message({

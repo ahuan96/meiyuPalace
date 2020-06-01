@@ -161,7 +161,7 @@ export default {
   data () {
     return {
       url_name: '',
-      action: this.url + 'activity/do_upload2?' + '&uc_sid=' + this.cookie,
+      action: this.url + 'palace_org/do_upload2?' + '&p_token=' + this.cookie,
       // 确认内容数据
       confirmData: { k: 'project', buttons: [{ name: '我知道了' }] },
       // 表单数据
@@ -225,12 +225,12 @@ export default {
     async setFormData () {
       const $rule = this.formRule
       // 班级数据
-      let $rt = await this.$get('activity/get_roomlist/')
+      let $rt = await this.$get('palace_org/get_roomlist/')
       $rule[3][1]['list'] = $rt.room_list
       this.room_list = $rt.room_list
       console.log('s', $rule[3][1])
       // 老师数据
-      $rt = await this.$get('meiyu/getTeachers/', {school_id: window.Global.database.school_id})
+      $rt = await this.$get('palace_org/getTeachers/', {school_id: window.Global.database.school_id})
       $rule[9][1]['list'] = $rt.data
     },
 
@@ -260,7 +260,7 @@ export default {
         console.log(roomids)
         console.log(this.formData)
         this.formData.room_ids = roomids
-        let $rt = this.$post('meiyu/createOrganization', this.formData)
+        let $rt = this.$post('palace_org/createOrganization', this.formData)
         $rt.then((rt) => {
           this.$router.push({ name: 'Group' })
         }).catch((rt) => {

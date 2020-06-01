@@ -117,7 +117,7 @@ export default {
       tableDataCheck: {},
 
       // 表格细节
-      tableDetailCheck: { info: 'meiyu/getOrganizationApply/', column: 'org_' },
+      tableDetailCheck: { info: 'palace_org/getOrganizationApply/', column: 'org_' },
 
       // 确认内容数据
       confirmData: { k: 'group', v: 0 }
@@ -143,7 +143,7 @@ export default {
      * @return {[]} []
      */
     askDatas () {
-      let $rt = this.$get('meiyu/organizationList/', this.params)
+      let $rt = this.$get('palace_org/organizationList/', this.params)
       $rt.then((rt) => {
         // 社团数据
         this.items = rt.data.data
@@ -177,9 +177,10 @@ export default {
     setSearchData () {
       const $sel = this.searchData.selector
       $sel[0].value = [
-        { id: '-1', name: '全部' },
-        { id: '1', name: '进行中' },
-        { id: '2', name: '已结束' }
+        { id: '', name: '全部' },
+        { id: '1', name: '招募中' },
+        { id: '2', name: '进行中' },
+        { id: '-1', name: '已结束' }
       ]
     },
 
@@ -268,7 +269,7 @@ export default {
      * @return {[]} []
      */
     toClose (_params) {
-      let $rt = this.$get('meiyu/closeOrganization/', _params)
+      let $rt = this.$get('palace_org/closeOrganization/', _params)
       $rt.then((rt) => {
         this.askDatas()
       }).catch((rt) => {

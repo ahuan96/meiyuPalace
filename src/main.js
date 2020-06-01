@@ -74,6 +74,8 @@ if (href.indexOf('localhost') > -1) {
     id: '3',
     level: '2',
     name: '赵老师',
+    subject: '1',
+    tel: '15879168001',
     school_id: '15',
     username: 'p5521498'
   }
@@ -89,7 +91,7 @@ if (href.indexOf('localhost') > -1) {
 // 路由检测
 router.beforeEach((to, from, next) => {
   if (!Vue.prototype.cookie) {
-    const loginUrl = Vue.prototype.url.replace('laoshi', 'login')
+    const loginUrl = 'http://test.laoshi.xinzhimeiyu.com/login/palace'
     window.location.href = loginUrl
     return
   }

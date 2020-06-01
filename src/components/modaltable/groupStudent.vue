@@ -9,11 +9,17 @@
 
       <el-table-column label="姓名" prop="name" width="100"></el-table-column>
 
-      <el-table-column label="学号" prop="student_no" width="180"></el-table-column>
+      <el-table-column label="学号" prop="student_no" width="120"></el-table-column>
 
       <el-table-column label="班级" prop="class_name" width="120"></el-table-column>
 
-      <el-table-column label="申请理由" prop="apply_content"></el-table-column>
+      <el-table-column label="申请理由" prop="apply_content" width="120"></el-table-column>
+
+      <el-table-column label="申请图片  " prop="imgs">
+        <template slot-scope="scope">
+          <el-image class="row-img" v-for="img in scope.row.imgs" :src="img" :key="img" alt="" :preview-src-list="srcList"></el-image>
+        </template>
+      </el-table-column>
 
       <el-table-column label="操作" width="120" fixed="right">
         <template slot-scope="scope">
@@ -60,7 +66,7 @@ export default {
   data () {
     return {
       selection: [], // 已勾选列表
-
+      srcList: [],
       params: {} // 参数
     }
   },
@@ -75,6 +81,19 @@ export default {
       Object.assign(this.params, this.tableData)
 
       this.askDatas(() => {
+        console.log(this.items)
+        this.items.forEach(item => {
+          // item.file = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1591008867915&di=5e378bfeea43f42453db93479867d620&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2%2F58d86beb9ea90.jpg%3Fdown,https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1591008867915&di=5e378bfeea43f42453db93479867d620&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2%2F58d86beb9ea90.jpg%3Fdown'
+          if (item.file) {
+            item.imgs = item.file.split(',')
+          } else {
+            item.imgs = []
+          }
+          this.srcList.push(...item.imgs)
+          console.log('imgs', item.imgs)
+          console.log('srcList', this.srcList)
+        })
+        console.log(222)
         this.toggleShow()
       })
     },
@@ -109,7 +128,7 @@ export default {
       }
       params.student_id = params.student_id.join(',')
 
-      let $rt = this.$get('meiyu/alterApplyState/', params)
+      let $rt = this.$get('palace_org/alterApplyState/', params)
       $rt.then((rt) => {
         this.askDatas()
       }).catch((rt) => {
@@ -137,7 +156,7 @@ export default {
       }
       params.student_id = params.student_id.join(',')
 
-      let $rt = this.$get('meiyu/alterApplyState/', params)
+      let $rt = this.$get('palace_org/alterApplyState/', params)
       $rt.then((rt) => {
         this.askDatas()
       }).catch((rt) => {

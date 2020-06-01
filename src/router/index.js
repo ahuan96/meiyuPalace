@@ -48,7 +48,8 @@ export default new Router({
     {
       name: 'Home',
       path: '/',
-      component: Home
+      component: Home,
+      redirect: '/teacher/admin/'
     },
 
     /**

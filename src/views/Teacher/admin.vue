@@ -1,35 +1,25 @@
 <template>
   <div class="teacher">
-    <ys-search ref="yssearch"
-      :searchData="searchData"
-      v-on:addNew="toAdd"
-      v-on:searchCalBak="paramsChange"></ys-search>
 
     <div class="main long">
       <div class="mid">
-        <el-table stripe height="100%"
+        <el-table  height="100%"
+          :cell-class-name="setCellName"
           :data="items">
-          <el-table-column label="系统帐号" prop="login_account"></el-table-column>
 
-          <el-table-column label="老师姓名" prop="teacher_name"></el-table-column>
+          <el-table-column label="系统帐号" prop="username"></el-table-column>
 
-          <el-table-column label="科目" prop="subject"></el-table-column>
+          <el-table-column label="老师姓名" prop="name"></el-table-column>
 
-          <el-table-column label="联系电话" prop="phone"></el-table-column>
+          <el-table-column label="科目" prop="subjectName"></el-table-column>
+
+          <el-table-column label="联系电话" prop="tel"></el-table-column>
 
           <el-table-column label="操作" width="240">
             <template slot-scope="scope">
               <el-link type="primary"
                 :underline="false"
-                @click="toEdit(scope.row.id)">修改信息</el-link>
-              <em></em>
-              <el-link type="primary"
-                :underline="false"
-                @click="toReset(scope.row.id)">修改密码</el-link>
-              <em></em>
-              <el-link type="danger"
-                :underline="false"
-                @click="goDel(scope.row.id)">删除</el-link>
+                @click="toView(scope.row.id)">查看信息</el-link>
             </template>
           </el-table-column>
         </el-table>
@@ -60,6 +50,11 @@
       :formRule="formRuleEdit"
       v-on:formCalBak="askDatas"></ys-modal-form-edit>
 
+  <ys-modal-form-view ref="ysformview"
+      :formData="formDataView"
+      :formRule="formRuleEdit"
+      v-on:formCalBak="askDatas"></ys-modal-form-view>
+
     <ys-modal-form-password ref="ysformpassword"
       :formData="formDataPassword"
       :formRule="formRulePassword"
@@ -69,13 +64,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import ysModalForm from '@/components/modalform/addTeacher'
-import ysModalFormEdit from '@/components/modalform/editTeacher'
-import ysModalFormPassword from '@/components/modalform/passwordTeacher'
+import ysModalForm from '@/components/modalform/addYoung'
+import ysModalFormEdit from '@/components/modalform/editYoung'
+import ysModalFormView from '@/components/modalform/viewTeacher'
+import ysModalFormPassword from '@/components/modalform/passwordYoung'
 
 export default {
   components: {
-    ysModalForm, ysModalFormEdit, ysModalFormPassword
+    ysModalForm, ysModalFormEdit, ysModalFormPassword, ysModalFormView
   },
   props: [
   ],
@@ -85,14 +81,14 @@ export default {
       cnt: 0, // 总数
       size: 20, // 单页数目
 
-      params: { page: 1, type: '', searchKey: '' }, // 参数
+      params: { page: 1, subject: '', keywords: '' }, // 参数
 
       // 查询内容数据
       searchData: {
         selector: [
-          { key: 'type', value: null, placeholder: '选择学科' }
+          { key: 'subject', value: null, placeholder: '选择学科' }
         ],
-        keywords: true,
+        searchCont: true,
         buttons: [
           { key: 'addNew', value: '新增老师' }
         ]
@@ -104,16 +100,20 @@ export default {
       // 表单内容数据
       formData: {
         admin_id: undefined,
-        type: '',
+        subject: '',
+        synopsis: '',
+        idcard: '',
         name: '',
-        pwd: '',
+        password: '',
         pwd2: '',
-        mobile: ''
+        tel: ''
       },
 
       // 表单内容验证
       formRule: [
         ['select', { list: null }],
+        ['desc', {}],
+        ['cont', {}],
         ['name', {}],
         ['password', {}],
         ['password', {}],
@@ -122,23 +122,35 @@ export default {
 
       // 表单编辑数据
       formDataEdit: {
-        admin_id: undefined,
-        type: '',
+        id: undefined,
+        subject: '',
         name: '',
-        mobile: ''
+        tel: '',
+        idcard: '',
+        synopsis: ''
       },
-
+      // 查看信息
+      formDataView: {
+        admin_id: undefined,
+        subject: '',
+        name: '',
+        tel: '',
+        idcard: '',
+        synopsis: ''
+      },
       // 表单编辑验证
       formRuleEdit: [
         ['select', { list: null }],
         ['name', {}],
-        ['tel', {}]
+        ['tel', {}],
+        ['cont', {}],
+        ['cont', {}]
       ],
 
       // 表单密码数据
       formDataPassword: {
-        admin_id: undefined,
-        pwd: '',
+        id: undefined,
+        password: '',
         pwd2: ''
       },
 
@@ -153,7 +165,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'xueke'
+      'xueke2'
     ])
   },
   methods: {
@@ -173,20 +185,17 @@ export default {
      * @return {[]} []
      */
     askDatas () {
-      let $rt = this.$get('palace_org/getTeachers', this.params)
+      let $rt = this.$get('palace_teacher/details/')
       $rt.then((rt) => {
         // 老师数据
-        this.items = rt.data.list
-        this.cnt = rt.data.cnt
-        this.size = rt.data.pagesize
-
+        this.$set(this.items, 0, rt.data.details)
         for (let item of this.items) {
-          if (item.type === '-1') {
-            item.subject = '艺术综合'
-          } else if (item.type === '1') {
-            item.subject = '音乐'
-          } else if (item.type === '2') {
-            item.subject = '美术'
+          if (item.subject === '3') {
+            item.subjectName = '艺术综合'
+          } else if (item.subject === '1') {
+            item.subjectName = '音乐'
+          } else if (item.subject === '2') {
+            item.subjectName = '美术'
           }
         }
       }).catch((rt) => {
@@ -199,7 +208,7 @@ export default {
      */
     setSearchData () {
       const $sel = this.searchData.selector
-      $sel[0].value = this.xueke
+      $sel[0].value = this.xueke2
     },
 
     /**
@@ -207,13 +216,18 @@ export default {
      * @return {[]} []
      */
     setFormData () {
-      const $type = this.formRule[0][1]
-      $type.list = this.xueke
+      const $subject = this.formRule[0][1]
+      $subject.list = this.xueke2
 
       const $edit = this.formRuleEdit[0][1]
-      $edit.list = this.xueke
+      $edit.list = this.xueke2
     },
-
+    setCellName (scope) {
+      // if (scope.row.level === '1' && scope.columnIndex === 0) {
+      //   return 'master'
+      // }
+      return ''
+    },
     /**
      * [pageChange 切换页码]
      * @param  {[Int]} p [页码]
@@ -236,7 +250,7 @@ export default {
         if ($params[k]) this.params[k] = $params[k]
         else this.params[k] = ''
       }
-
+      console.log(this.params)
       this.askDatas()
     },
 
@@ -254,17 +268,25 @@ export default {
      * @return {[]} []
      */
     toEdit (id) {
-      this.formDataEdit.admin_id = id
+      this.formDataEdit.id = id
       this.$refs.ysformedit.initial()
     },
-
+    /**
+     * [toEdit 查看老师信息]
+     * @param  {[Int]} id [用户ID]
+     * @return {[]} []
+     */
+    toView (id) {
+      this.formDataView.admin_id = id
+      this.$refs.ysformview.initial()
+    },
     /**
      * [toReset 修改密码]
      * @param  {[Int]} id [用户ID]
      * @return {[]} []
      */
     toReset (id) {
-      this.formDataPassword.admin_id = id
+      this.formDataPassword.id = id
       this.$refs.ysformpassword.initial()
     },
 

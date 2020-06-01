@@ -93,7 +93,7 @@ export default {
      * @return {[]} []
      */
     askDatas (cbk) {
-      let $rt = this.$get('meiyu/attendanceList/', this.params)
+      let $rt = this.$get('palace_org/attendanceList/', this.params)
       $rt.then((rt) => {
         // 考勤基本信息
         this.searchData.text = '社团名：' + rt.data.data.name
@@ -152,7 +152,7 @@ export default {
         params.queqin = params.queqin.join(',')
       }
 
-      let $rt = this.$get('meiyu/addAttendance/', params)
+      let $rt = this.$get('palace_org/addAttendance/', params)
       $rt.then((rt) => {
         this.toggleShow()
       }).catch((rt) => {
