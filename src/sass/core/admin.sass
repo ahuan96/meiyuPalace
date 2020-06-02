@@ -19,10 +19,7 @@
         size: .7rem
     span.at
       background-image: url('../assets/icon/art.png')
-    .row-img>img
-      width: 2rem
-      height: 2rem
-      margin-right: 0.5rem
+
   // 底部
   .bot
     position: relative
@@ -188,8 +185,13 @@
       width: 11rem
     .el-select
       width: 11rem
+    .step-m
+      width: 6rem 
+      margin-right: 2rem
     .head-img
       max-height: 15rem
+    .img-list img
+      max-height: 8rem
     .add-btn
       display: inline-block
       width: 1.75rem
@@ -200,6 +202,7 @@
       color: #fff
     .class-list
       display: flex
+      flex-wrap: wrap
       margin: 0.5rem 0
       .class-item
         height: 1.5rem
@@ -223,7 +226,24 @@
     padding: .2rem 0.5rem
     background:#C6C6B9
     color: #fff
-
+  .m-tip
+    font-weight: bold
+    color: #333333
+    font-size: 14px
+    margin: 0.3rem 0
+  .m-cont
+    font-size: 12px
+    color: #333333
+  .m-himg
+    height: 6rem
+    width: 100%
+    border-radius: 0.3rem
+  .m-mimg img
+    width: 3.5rem
+    height: 3.5rem
+    border-radius: 0.3rem
+    margin: 0.5rem
+    margin-left: 0
 /**
  * 校外实践
  */
@@ -240,12 +260,14 @@
           font-weight: bold
         .active-list
           display: flex
+          flex-wrap: wrap
           .active-item
             width: 14rem
             border-radius: 0.4rem
             padding: 0.5rem
             background: #fff
             margin-right: 1rem
+            margin-bottom: 1rem
             .active-no
               font-size: 0.9rem
               color:#5E9EEB
@@ -261,7 +283,10 @@
             .img-list
               display: flex
               justify-content: space-around
-              flex-wrap: wrap
+              // flex-wrap: wrap
+              overflow-x: auto
               img 
                 width: 4rem
                 height: 4rem
+                margin-right: 0.4rem
+                margin-bottom: 0.4rem

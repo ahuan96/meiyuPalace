@@ -185,21 +185,31 @@ export default {
      * @return {[]} []
      */
     askDatas () {
-      let $rt = this.$get('palace_teacher/details/')
-      $rt.then((rt) => {
-        // 老师数据
-        this.$set(this.items, 0, rt.data.details)
-        for (let item of this.items) {
-          if (item.subject === '3') {
-            item.subjectName = '艺术综合'
-          } else if (item.subject === '1') {
-            item.subjectName = '音乐'
-          } else if (item.subject === '2') {
-            item.subjectName = '美术'
-          }
+      // let $rt = this.$get('palace_teacher/details/')
+      // $rt.then((rt) => {
+      //   // 老师数据
+      //   this.$set(this.items, 0, rt.data.details)
+      //   for (let item of this.items) {
+      //     if (item.subject === '3') {
+      //       item.subjectName = '艺术综合'
+      //     } else if (item.subject === '1') {
+      //       item.subjectName = '音乐'
+      //     } else if (item.subject === '2') {
+      //       item.subjectName = '美术'
+      //     }
+      //   }
+      // }).catch((rt) => {
+      // })
+      this.$set(this.items, 0, this.$userInfo)
+      for (let item of this.items) {
+        if (item.subject === '3') {
+          item.subjectName = '艺术综合'
+        } else if (item.subject === '1') {
+          item.subjectName = '音乐'
+        } else if (item.subject === '2') {
+          item.subjectName = '美术'
         }
-      }).catch((rt) => {
-      })
+      }
     },
 
     /**

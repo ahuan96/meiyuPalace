@@ -156,7 +156,7 @@
         <el-form-item>
           <div class="submit">
             <el-button type="primary"
-              @click="submitForm('elform')">保存</el-button>
+              @click="submitForm('elform')">保存并提交</el-button>
             <el-button type="info"
               @click="cancelForm">取消</el-button>
           </div>

@@ -48,6 +48,7 @@
         </el-form-item>
 
         <el-form-item label="招募范围" prop="grade">
+          <div><el-checkbox @change="changeStepAll" v-model="isStepAll">所有年级班级</el-checkbox></div>
             <div v-for="(step,index) in stepArr" :key="index">
               <el-select placeholder="请选择阶段"
               @change="changeStep(step.step,index)"
@@ -71,6 +72,9 @@
             </el-select>
              <div class="add-btn" v-if="index == 0" @click="addStep">
                <i class="el-icon-plus"></i>
+             </div>
+             <div class="add-btn"  @click="delStep(index)">
+               <i class="el-icon-minus"></i>
              </div>
              <div class="class-list">
                <template v-for="(item,index2) in step.class" >
@@ -135,7 +139,9 @@
         <el-form-item>
           <div class="submit">
             <el-button type="primary"
-              @click="submitForm('elform')">保存</el-button>
+              @click="submitForm('elform')">保存并提交</el-button>
+              <el-button type="primary"
+              @click="toViewDialog('elform')">预览</el-button>
             <el-button type="info"
               @click="cancelForm">取消</el-button>
           </div>
@@ -146,6 +152,30 @@
       <ys-modal-confirm ref="ysconfirm"
         :confirmData="confirmData"></ys-modal-confirm>
     </div>
+      <!-- 预览弹框 -->
+    <el-dialog title="预览" :visible.sync="dialogVisible" width="320px">
+     <div>
+        <div class="m-tip">{{formData.name}}</div>
+        <div>
+          <img class="m-himg" :src="formData.img_url" alt="">
+        </div>
+        <div class="m-tip">活动内容</div>
+        <div class="m-cont">{{formData.active_content}}</div>
+        <!-- <div class="m-mimg">
+          <img v-if="this.img_one" :src="this.img_one" >
+          <img v-if="this.img_two" :src="this.img_two" >
+          <img v-if="this.img_three" :src="this.img_three" >
+        </div> -->
+        <div class="m-tip">申请要求</div>
+        <div class="m-cont">{{formData.condition}}</div>
+        <div class="m-tip">活动范围</div>
+        <div class="m-cont">{{class_list}}</div>
+        <div class="m-tip">上传截至时间</div>
+        <div class="m-cont">{{$timeformat(this.formData.end_time, 1)}}</div>
+        <div class="m-tip">发起单位</div>
+        <div class="m-cont">{{formData.organization}}</div>
+     </div>
+  </el-dialog>
   </div>
 </template>
 
@@ -161,6 +191,8 @@ export default {
   data () {
     return {
       url_name: '',
+      dialogVisible: false,
+      class_list: '',
       action: this.url + 'palace_org/do_upload2?' + '&p_token=' + this.cookie,
       // 确认内容数据
       confirmData: { k: 'project', buttons: [{ name: '我知道了' }] },
@@ -181,6 +213,7 @@ export default {
         img_url: ''
       },
       // 阶段数组
+      isStepAll: false,
       steps: [{value: 0, label: '小学'}, {value: 1, label: '初中'}, {value: 2, label: '高中'}],
       stepArr: [{step: '', grade: '', grades: [], class: []}],
       // 表单验证
@@ -226,6 +259,15 @@ export default {
       const $rule = this.formRule
       // 班级数据
       let $rt = await this.$get('palace_org/get_roomlist/')
+      // 对班级顺序 从小到大排序
+      function sortNumber (a, b) {
+        let c = a.name.replace(/班/, '')
+        let d = b.name.replace(/班/, '')
+        return c - d
+      }
+      $rt.room_list.forEach(item => {
+        item.rooms.sort(sortNumber)
+      })
       $rule[3][1]['list'] = $rt.room_list
       this.room_list = $rt.room_list
       console.log('s', $rule[3][1])
@@ -307,6 +349,51 @@ export default {
       })
       console.log(this.stepArr)
     },
+    changeStepAll (value) {
+      if (value) {
+        this.stepArr = []
+        this.room_list.forEach(item => {
+          let obj = {}
+          obj.grades = []
+          obj.grade = item.grade_key
+          obj.step = this.getStep(item.grade_key)
+          let grades = []
+          if (obj.step === 0) {
+            grades = [ 1, 2, 3, 4, 5, 6 ]
+          } else if (obj.step === 1) {
+            grades = [7, 8, 9]
+          } else if (obj.step === 2) {
+            grades = [10, 11, 12]
+          }
+          for (var i = 0; i < this.room_list.length; i++) {
+            for (var j = 0; j < grades.length; j++) {
+              // console.log('aaa', this.room_list[i].grade_key, grades[j])
+              if (this.room_list[i].grade_key === grades[j]) {
+                console.log('bb', i, this.room_list[i], grades[j])
+                obj.grades.push(this.room_list[i])
+              }
+            }
+          }
+          obj.class = item.rooms
+          obj.class.forEach(item2 => {
+            item2.active = true
+          })
+          this.stepArr.push(obj)
+        })
+        // this.stepArr = [{step: '', grade: '', grades: [], class: []}]
+      } else {
+        this.stepArr = [{step: '', grade: '', grades: [], class: []}]
+      }
+    },
+    getStep (n) {
+      if (n === 1 || n === 2 || n === 3 || n === 4 || n === 5 || n === 6) {
+        return 0
+      } else if (n === 7 || n === 8 || n === 9) {
+        return 1
+      } else {
+        return 2
+      }
+    },
     yinshe (str, id) {
       var n = ''
       switch (str) {
@@ -338,6 +425,36 @@ export default {
       if (n === id) {
         return true
       }
+    },
+    reyinshe (id) {
+      var n = ''
+      switch (id) {
+        case 1 : n = '1年级'
+          break
+        case 2: n = '2年级'
+          break
+        case 3: n = '3年级'
+          break
+        case 4: n = '4年级'
+          break
+        case 5: n = '5年级'
+          break
+        case 6: n = '6年级'
+          break
+        case 7: n = '7年级'
+          break
+        case 8: n = '8年级'
+          break
+        case 9: n = '9年级'
+          break
+        case 10: n = '高一年级'
+          break
+        case 11: n = '高二年级'
+          break
+        case 12: n = '高三年级'
+          break
+      }
+      return n
     },
     handleAvatarSuccess (res, file) {
       console.log(res)
@@ -387,6 +504,33 @@ export default {
     // 增加阶段 年级
     addStep () {
       this.stepArr.push({step: '', grade: '', grades: [], class: []})
+    },
+    delStep (index) {
+      if (this.stepArr.length === 1) { this.$err('最后一项不准删除'); return }
+      this.stepArr.splice(index, 1)
+      this.isStepAll = false
+    },
+    toViewDialog (form) {
+      this.$refs[form].validate((valid) => {
+        console.log(this.formData.type)
+        if (!valid) {
+          this.$err('请先填写完整内容')
+          return false
+        } else {
+          var classList = ''
+          this.stepArr.forEach(step => {
+            step.class.forEach(item => {
+              if (classList) {
+                classList += ' 、' + this.reyinshe(step.grade) + item.name
+              } else {
+                classList = this.reyinshe(step.grade) + item.name
+              }
+            })
+          })
+          this.class_list = classList
+          this.dialogVisible = true
+        }
+      })
     }
   },
   created () {

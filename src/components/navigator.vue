@@ -124,6 +124,12 @@ export default {
     this.initial()
   },
   mounted () {
+    let userInfo = this.$userInfo
+    console.log(this)
+
+    if (userInfo.level === '') {
+      this.items[0].path = 'youngAdmin'
+    }
   }
 }
 </script>

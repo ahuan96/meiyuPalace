@@ -70,16 +70,16 @@ const href = window.location.href
 if (href.indexOf('localhost') > -1) {
   Vue.prototype.url = 'http://test.laoshi.xinzhimeiyu.com/'
   Vue.prototype.cookie = '2680dVQAvQ2p6S8VgSlF8JZtbbjJz6eU0XJAyJKkVoQSvjo'
-  var user = {
-    id: '3',
-    level: '2',
-    name: '赵老师',
-    subject: '1',
-    tel: '15879168001',
-    school_id: '15',
-    username: 'p5521498'
-  }
-  sessionStorage.setItem('user', JSON.stringify(user))
+  // var user = {
+  //   id: '3',
+  //   level: '2',
+  //   name: '赵老师',
+  //   subject: '1',
+  //   tel: '15879168001',
+  //   school_id: '15',
+  //   username: 'p5521498'
+  // }
+  // sessionStorage.setItem('user', JSON.stringify(user))
 } else if (href.indexOf('test') > -1) {
   Vue.prototype.url = 'http://test.laoshi.xinzhimeiyu.com/'
   Vue.prototype.cookie = getcookie('test_p_token')
@@ -93,9 +93,16 @@ router.beforeEach((to, from, next) => {
   if (!Vue.prototype.cookie) {
     const loginUrl = 'http://test.laoshi.xinzhimeiyu.com/login/palace'
     window.location.href = loginUrl
-    return
+  } else {
+    console.log(222)
+    let $rt = Vue.prototype.$get('palace_teacher/details/')
+    $rt.then((rt) => {
+      console.log('rt', rt)
+      Vue.prototype.$userInfo = rt.data.details
+      next()
+    }).catch((rt) => {
+    })
   }
-  next()
 })
 
 /* eslint-disable no-new
