@@ -75,8 +75,8 @@ export default {
     return {
       // 表单内容提交
       formSubmit: {
-        info: 'school_palace/details/',
-        post: 'school_palace/do_save/',
+        info: 'palace_teacher/details/',
+        post: 'palace_teacher/do_save/',
         column: ''
       }
     }

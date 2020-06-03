@@ -124,11 +124,11 @@ export default {
     this.initial()
   },
   mounted () {
-    let userInfo = this.$userInfo
-    console.log(this)
-
-    if (userInfo.level === '') {
-      this.items[0].path = 'youngAdmin'
+    let userInfo = JSON.parse(sessionStorage.getItem('user'))
+    if (userInfo.level === '1') {
+      let item = this.items[0]
+      item.path = 'YoungAdmin'
+      this.$set(this.items, 0, item)
     }
   }
 }

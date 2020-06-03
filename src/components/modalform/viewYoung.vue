@@ -85,12 +85,11 @@ export default {
      * @return {[]} []
      */
     initial () {
-      let url = 'admin/get_teacher_info/'
+      let url = 'palace_teacher/details'
       let params = {
         admin_id: this.formData.admin_id,
         id: this.formData.admin_id
       }
-      url = 'school_palace/details/'
       console.log('hhh')
       let $rt = this.$get(url, params)
       $rt.then((rt) => {

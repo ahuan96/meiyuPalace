@@ -203,7 +203,7 @@ export default {
      * @return {[]} []
      */
     askDatas () {
-      let $rt = this.$get('school_palace/teacher_list/', this.params)
+      let $rt = this.$get('palace_teacher/plan_list/', this.params)
       $rt.then((rt) => {
         // 老师数据
         this.items = rt.data.list
@@ -327,7 +327,7 @@ export default {
      * @return {[]} []
      */
     toDel (_params) {
-      let $rt = this.$post('admin/delete_account/', _params)
+      let $rt = this.$post('palace_teacher/delete/', {}, _params)
       $rt.then((rt) => {
         this.askDatas()
       }).catch((rt) => {

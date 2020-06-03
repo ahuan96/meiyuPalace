@@ -90,7 +90,7 @@ export default {
       // 表单内容提交
       formSubmit: {
         post: 'admin/add_teacher/',
-        post2: 'school_palace/do_save/'
+        post2: 'palace_teacher/do_save/'
       }
     }
   },

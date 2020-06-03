@@ -49,7 +49,7 @@ export default {
     return {
       // 表单内容提交
       formSubmit: {
-        post: 'school_palace/do_save/'
+        post: 'palace_teacher/do_save/'
       }
     }
   },

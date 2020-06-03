@@ -1,6 +1,9 @@
 <template>
   <div class="teacher">
-
+    <div class="r-header">
+           <button ><a href="../../static/file/泉州教学计划模板.xls" download="泉州教学计划模板.xls">下载教学计划模板</a></button>
+           <button ><a href="../../static/file/泉州教学年度总结.xls" download="泉州教学年度总结.xls">泉州教学年度总结</a></button>
+    </div>
     <div class="main long">
       <div class="mid">
         <el-table  height="100%"
@@ -15,11 +18,49 @@
 
           <el-table-column label="联系电话" prop="tel"></el-table-column>
 
-          <el-table-column label="操作" width="240">
-            <template slot-scope="scope">
-              <el-link type="primary"
+          <el-table-column label="操作" width="340" >
+            <template slot-scope="scope" >
+              <div style="display:flex;flex-wrap:wrap;align-items: center;">
+                <el-link type="primary"
                 :underline="false"
-                @click="toView(scope.row.id)">查看信息</el-link>
+                @click="toView(scope.row.id)">个人信息</el-link>
+                <em></em>
+                 <el-link type="primary"
+                  :underline="false"
+                  @click="toView(scope.row.id)">社团信息</el-link>
+                <em></em>
+                 <el-link   v-if="scope.row.plan_file" target="_blank" :href="scope.row.plan_file" :underline="false">
+                   已上传教学计划
+                </el-link>
+                <el-upload
+                  v-else
+                  class="avatar-uploader"
+                  :action="action"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  name="userfile"
+                  list-type="text"
+                  :before-upload="beforeAvatarUpload">
+                <el-link type="primary"
+                :underline="false">上传教学计划</el-link>
+              </el-upload>
+              <em></em>
+              <el-link  v-if="scope.row.report_file" target="_blank" :href="scope.row.report_file" :underline="false">
+                已上传学期总结
+              </el-link>
+                <el-upload
+                v-else
+                  class="avatar-uploader"
+                  :action="action2"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                  name="userfile"
+                  list-type="text"
+                  :before-upload="beforeAvatarUpload">
+                <el-link type="primary"
+                :underline="false">上传学期总结</el-link>
+              </el-upload>
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -80,7 +121,8 @@ export default {
       items: [], // 老师数据
       cnt: 0, // 总数
       size: 20, // 单页数目
-
+      action: this.url + 'palace_teacher/upload?' + '&p_token=' + this.cookie + '&type=plan_file',
+      action2: this.url + 'palace_teacher/upload?' + '&p_token=' + this.cookie + '&type=report_file',
       params: { page: 1, subject: '', keywords: '' }, // 参数
 
       // 查询内容数据
@@ -185,33 +227,42 @@ export default {
      * @return {[]} []
      */
     askDatas () {
-      // let $rt = this.$get('palace_teacher/details/')
-      // $rt.then((rt) => {
-      //   // 老师数据
-      //   this.$set(this.items, 0, rt.data.details)
-      //   for (let item of this.items) {
-      //     if (item.subject === '3') {
-      //       item.subjectName = '艺术综合'
-      //     } else if (item.subject === '1') {
-      //       item.subjectName = '音乐'
-      //     } else if (item.subject === '2') {
-      //       item.subjectName = '美术'
-      //     }
-      //   }
-      // }).catch((rt) => {
-      // })
-      this.$set(this.items, 0, this.$userInfo)
-      for (let item of this.items) {
-        if (item.subject === '3') {
-          item.subjectName = '艺术综合'
-        } else if (item.subject === '1') {
-          item.subjectName = '音乐'
-        } else if (item.subject === '2') {
-          item.subjectName = '美术'
+      let $rt = this.$get('palace_teacher/plan_list/')
+      $rt.then((rt) => {
+        // 老师数据
+        // this.$set(this.items, rt.data.list)
+        this.items = rt.data.list
+        for (let item of this.items) {
+          if (item.subject === '3') {
+            item.subjectName = '艺术综合'
+          } else if (item.subject === '1') {
+            item.subjectName = '音乐'
+          } else if (item.subject === '2') {
+            item.subjectName = '美术'
+          }
         }
-      }
+      }).catch((rt) => {
+      })
+      // this.$set(this.items, 0, this.$userInfo)
+      // for (let item of this.items) {
+      //   if (item.subject === '3') {
+      //     item.subjectName = '艺术综合'
+      //   } else if (item.subject === '1') {
+      //     item.subjectName = '音乐'
+      //   } else if (item.subject === '2') {
+      //     item.subjectName = '美术'
+      //   }
+      // }
     },
-
+    beforeAvatarUpload (file) {
+    },
+    handleAvatarSuccess (res, file) {
+      this.$notify({
+        title: '成功',
+        message: '上传文件成功',
+        type: 'success'
+      })
+    },
     /**
      * [setSearchData 设置查询内容数据]
      * @return {[]} []
@@ -321,6 +372,13 @@ export default {
         this.askDatas()
       }).catch((rt) => {
       })
+    },
+    /**
+     * [toUpfile 上传文件]
+     * @param  {[Number]} type [类型]
+     * @return {[]} []
+     */
+    toUpfile (type) {
     }
   },
   created () {
