@@ -7,6 +7,8 @@ import Failed from '@/views/404.vue'
 
 import Teacher from '@/views/Teacher/index.vue'
 import TeacherAdmin from '@/views/Teacher/admin.vue'
+import TeacherTgroup from '@/views/Teacher/tgroup.vue'
+import TeacherTactive from '@/views/Teacher/Tactive.vue'
 
 import Young from '@/views/Young/index.vue'
 import YoungAdmin from '@/views/Young/admin.vue'
@@ -82,6 +84,16 @@ export default new Router({
               next()
             }
           }
+        },
+        {
+          name: 'TeacherTgroup',
+          path: '/teacher/tgroup/',
+          component: TeacherTgroup
+        },
+        {
+          name: 'TeacherTactive',
+          path: '/teacher/tactive/',
+          component: TeacherTactive
         }
       ]
     },

@@ -7,6 +7,32 @@ import * as getters from './getters'
 
 Vue.use(Vuex)
 
+// 验证身份证
+let checkId = (rule, value, callback) => {
+  if (!value) {
+    return callback(new Error('身份证号不能为空'))
+  }
+  setTimeout(() => {
+    if (!/^\d{17}(\d|x)$/i.test(value)) {
+      callback(new Error('输入的格式错误'))
+    } else {
+      callback()
+    }
+  }, 1000)
+}
+
+// 验证二次密码
+let checkpwd = (rule, value, callback, source, options) => {
+  if (!value) {
+    return callback(new Error('请再次输入密码'))
+  } else {
+    // console.log(rule)
+    // console.log(source)
+    // console.log(options)
+    callback()
+  }
+}
+
 const state = {
   /**
    * [XUEKE 学科]
@@ -142,7 +168,9 @@ const state = {
     desc: [
       { required: false },
       { min: 2, max: 500, message: '长度为 2 到 500 个字符', trigger: 'blur' }
-    ]
+    ],
+    idcard: [{ validator: checkId, required: true, trigger: 'blur' }],
+    pwd2: [{ validator: checkpwd, required: true, trigger: 'blur' }]
   },
 
   /**

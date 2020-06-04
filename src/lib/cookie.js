@@ -8,7 +8,6 @@ export function setcookie (key, value) {
   const days = 30
   const exp = new Date()
   exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000)
-
   document.cookie = key + '=' + escape(value) + ';expires=' + exp.toGMTString()
 }
 

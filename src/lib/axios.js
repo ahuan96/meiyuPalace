@@ -79,8 +79,8 @@ export function post (url, params = {}, urlparams = {}) {
         const rt = res.data
         if (rt.err_code === 0) {
           resolve(res.data)
-        } else if (rt.err_code === 510) {
-          const loginUrl = this.url.replace('laoshi', 'login')
+        } else if (rt.err_code === 20) {
+          const loginUrl = 'http://test.laoshi.xinzhimeiyu.com/login/palace'
           window.location.href = loginUrl
         } else {
           reject(rt)
@@ -132,8 +132,8 @@ export function get (url, params = {}) {
         const rt = res.data
         if (rt.err_code === 0) {
           resolve(res.data)
-        } else if (rt.err_code === 510) {
-          const loginUrl = this.url.replace('laoshi', 'login')
+        } else if (rt.err_code === 20) {
+          const loginUrl = 'http://test.laoshi.xinzhimeiyu.com/login/palace'
           window.location.href = loginUrl
         } else {
           reject(rt)

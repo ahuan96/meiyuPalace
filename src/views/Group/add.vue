@@ -120,7 +120,7 @@
               v-model="rules.teacher_ids[2]['data']" @change="teacherIds">
               <el-option
                 :key="item.id"
-                :label="item.teacher_name"
+                :label="item.name"
                 :value="item.id"
                 v-for="item in rules.teacher_ids[2]['list']">
               </el-option>

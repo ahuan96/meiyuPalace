@@ -25,7 +25,7 @@
 
           <el-table-column label="联系电话" prop="tel"></el-table-column>
 
-          <el-table-column label="操作" width="240">
+          <el-table-column label="操作" width="440">
             <template slot-scope="scope">
               <el-link type="primary"
                 :underline="false"
@@ -35,6 +35,10 @@
                 :underline="false"
                 @click="toReset(scope.row.id)">修改密码</el-link>
               <em></em>
+              <el-link type="primary"
+                  :underline="false"
+                  @click="toViewGroup(scope.row.id)">社团信息</el-link>
+                <em></em>
               <el-link type="danger"
                 :underline="false"
                 @click="goDel(scope.row.id)">删除</el-link>
@@ -107,6 +111,7 @@ export default {
           { key: 'subject', value: null, placeholder: '选择学科' }
         ],
         searchCont: true,
+        placeholder: '请输入老师姓名',
         buttons: [
           { key: 'addNew', value: '新增老师' }
         ]
@@ -131,7 +136,7 @@ export default {
       formRule: [
         ['select', { list: null }],
         ['desc', {}],
-        ['cont', {}],
+        ['idcard', {}],
         ['name', {}],
         ['password', {}],
         ['password', {}],
@@ -161,7 +166,7 @@ export default {
         ['select', { list: null }],
         ['name', {}],
         ['tel', {}],
-        ['cont', {}],
+        ['idcard', {}],
         ['cont', {}]
       ],
 
@@ -300,6 +305,15 @@ export default {
     toView (id) {
       this.formDataView.admin_id = id
       this.$refs.ysformview.initial()
+    },
+    /**
+     * [toEdit 查看社团信息]
+     * @param  {[Int]} id [用户ID]
+     * @return {[]} []
+     */
+    toViewGroup (id) {
+      this.formDataView.admin_id = id
+      this.$router.push({name: 'TeacherTgroup', params: { id: id }})
     },
     /**
      * [toReset 修改密码]

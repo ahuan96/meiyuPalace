@@ -73,7 +73,7 @@
     </li>
     <li class="input"
       v-if="searchData.searchCont">
-      <el-input placeholder="查询内容"
+      <el-input :placeholder="searchData.placeholder||'查询内容'"
         v-model="$data.$params.keywords">
         <i slot="suffix" class="el-input__icon el-icon-search"></i>
       </el-input>

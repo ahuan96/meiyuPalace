@@ -1,8 +1,8 @@
 <template>
   <div class="teacher">
     <div class="r-header">
-           <button ><a href="../../static/file/泉州教学计划模板.xls" download="泉州教学计划模板.xls">下载教学计划模板</a></button>
-           <button ><a href="../../static/file/泉州教学年度总结.xls" download="泉州教学年度总结.xls">泉州教学年度总结</a></button>
+           <button ><a href="/static/palace/file/泉州教学计划模板.xls" download="教学计划模板.xls">下载教学计划模板</a></button>
+           <button ><a href="/static/palace/file/泉州教学年度总结.xls" download="学期总结模板.xls">下载学期总结模板</a></button>
     </div>
     <div class="main long">
       <div class="mid">
@@ -12,7 +12,13 @@
 
           <el-table-column label="系统帐号" prop="username"></el-table-column>
 
-          <el-table-column label="老师姓名" prop="name"></el-table-column>
+          <el-table-column label="老师姓名" prop="name">
+            <template slot-scope="scope">
+              <el-link type="primary"
+                :underline="false"
+                @click="toView(scope.row.id )">{{scope.row.name}}</el-link>
+            </template>
+          </el-table-column>
 
           <el-table-column label="科目" prop="subjectName"></el-table-column>
 
@@ -23,11 +29,15 @@
               <div style="display:flex;flex-wrap:wrap;align-items: center;">
                 <el-link type="primary"
                 :underline="false"
-                @click="toView(scope.row.id)">个人信息</el-link>
+                @click="toEdit(scope.row.id)">修改信息</el-link>
+              <em></em>
+              <el-link type="primary"
+                :underline="false"
+                @click="toReset(scope.row.id)">修改密码</el-link>
                 <em></em>
                  <el-link type="primary"
                   :underline="false"
-                  @click="toView(scope.row.id)">社团信息</el-link>
+                  @click="toViewGroup(scope.row.id)">社团信息</el-link>
                 <em></em>
                  <el-link   v-if="scope.row.plan_file" target="_blank" :href="scope.row.plan_file" :underline="false">
                    已上传教学计划
@@ -131,6 +141,7 @@ export default {
           { key: 'subject', value: null, placeholder: '选择学科' }
         ],
         searchCont: true,
+        placeholder: '请输入老师姓名',
         buttons: [
           { key: 'addNew', value: '新增老师' }
         ]
@@ -155,7 +166,7 @@ export default {
       formRule: [
         ['select', { list: null }],
         ['desc', {}],
-        ['cont', {}],
+        ['idcard', {}],
         ['name', {}],
         ['password', {}],
         ['password', {}],
@@ -185,7 +196,7 @@ export default {
         ['select', { list: null }],
         ['name', {}],
         ['tel', {}],
-        ['cont', {}],
+        ['idcard', {}],
         ['cont', {}]
       ],
 
@@ -199,7 +210,7 @@ export default {
       // 表单密码验证
       formRulePassword: [
         ['password', {}],
-        ['password', {}]
+        ['password2', {}]
       ]
     }
   },
@@ -262,6 +273,7 @@ export default {
         message: '上传文件成功',
         type: 'success'
       })
+      this.initPages()
     },
     /**
      * [setSearchData 设置查询内容数据]
@@ -340,6 +352,15 @@ export default {
     toView (id) {
       this.formDataView.admin_id = id
       this.$refs.ysformview.initial()
+    },
+    /**
+     * [toEdit 查看社团信息]
+     * @param  {[Int]} id [用户ID]
+     * @return {[]} []
+     */
+    toViewGroup (id) {
+      this.formDataView.admin_id = id
+      this.$router.push({name: 'TeacherTgroup', params: { id: id }})
     },
     /**
      * [toReset 修改密码]
