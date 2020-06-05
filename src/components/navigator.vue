@@ -41,7 +41,7 @@ export default {
           name: '老师管理',
           type: '_pathTo',
           path: 'TeacherAdmin',
-          style: ''
+          style: 'active'
         },
         {
           id: 'nav5',

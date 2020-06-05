@@ -360,7 +360,7 @@ export default {
      */
     toViewGroup (id) {
       this.formDataView.admin_id = id
-      this.$router.push({name: 'TeacherTgroup', params: { id: id }})
+      this.$router.push({name: 'TeacherTgroup', query: { id: id }})
     },
     /**
      * [toReset 修改密码]

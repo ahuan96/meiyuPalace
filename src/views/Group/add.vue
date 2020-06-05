@@ -1,13 +1,13 @@
 <template>
   <div class="group" >
-    <div class="edit" style="background:#F0F0F0;padding:0 1rem;cursor:pointer;">
-      <div class="back" style="color:#79BBF9;padding:1rem 0;font-size: 1rem;"
+    <div class="edit" style="background:#F0F0F0;">
+      <div class="back" style="color:#79BBF9;padding:1rem 0;font-size: 1rem;cursor:pointer;display:inline-block;"
        @click="$router.back(-1)"
       >
         <i class="el-icon-arrow-left"></i>
         返回
       </div>
-      <el-form ref="elform" label-width="150px" style="background:#fff;border-radius:0.5rem;padding:1rem 0;"
+      <el-form ref="elform" label-width="150px" style="background:#fff;border-radius:0.5rem;padding:1rem 0;min-height:calc(100% - 5rem)"
         :model="formData"
         :rules="rules">
         <el-form-item label="社团名称" prop="name">

@@ -42,7 +42,7 @@ import processView from '@/views/Process/viewProcess.vue'
 
 Vue.use(Router)
 
-let user = JSON.parse(sessionStorage.getItem('user'))
+console.log(999)
 
 export default new Router({
   routes: [
@@ -54,6 +54,8 @@ export default new Router({
       path: '/',
       component: Home,
       beforeEnter: (to, from, next) => {
+        let user = JSON.parse(sessionStorage.getItem('user'))
+
         if (user.level === '2') {
           next({path: '/teacher/admin/'})
         } else if (user.level === '1') {
@@ -78,6 +80,7 @@ export default new Router({
           path: '/teacher/admin/',
           component: TeacherAdmin,
           beforeEnter: (to, from, next) => {
+            let user = JSON.parse(sessionStorage.getItem('user'))
             if (user.level === '1') {
               next({path: '/young/admin/'})
             } else {
@@ -87,7 +90,7 @@ export default new Router({
         },
         {
           name: 'TeacherTgroup',
-          path: '/teacher/tgroup/',
+          path: '/teacher/tgroup/:id',
           component: TeacherTgroup
         },
         {
@@ -114,6 +117,7 @@ export default new Router({
           path: '/young/admin/',
           component: YoungAdmin,
           beforeEnter: (to, from, next) => {
+            let user = JSON.parse(sessionStorage.getItem('user'))
             if (user.level === '2') {
               next({path: '/teacher/admin/'})
             } else {

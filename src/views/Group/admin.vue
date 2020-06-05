@@ -23,28 +23,42 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="状态" prop="stateName" width="100"></el-table-column>
+          <el-table-column label="状态" prop="state" width="100">
+             <template slot-scope="scope">
+              <div v-if="scope.row.state==='-1'">已结束</div>
+              <div class="blueTd" v-if="scope.row.state==='1'">招募中</div>
+              <div class="blueTd" v-if="scope.row.state==='2'">进行中</div>
+            </template>
+          </el-table-column>
 
           <el-table-column label="操作" width="340" fixed="right">
             <template slot-scope="scope">
-              <el-link type="primary"
-                :underline="false"
-                @click="toLook(scope.row.id)">查看社团</el-link>
-              <em></em>
-              <el-link type="primary"
-                :underline="false"
-                @click="toCheck(scope.row.id)">待审核名单</el-link>
-              <em></em>
-              <el-link type="primary"
-                :underline="false"
-                @click="toAdd(scope.row.id)">创建考勤</el-link>
               <template
-                v-if="scope.row.state !== '-1'">
+               v-if="scope.row.state === '1'">
+                <el-link type="primary"
+                  :underline="false"
+                @click="toCheck(scope.row.id)">待审核名单</el-link>
+              </template>
+              <template
+                v-if="scope.row.state === '1'">
                 <em></em>
                 <el-link type="danger"
                   :underline="false"
-                  @click="goClose(scope.row.id)">关闭</el-link>
+                  @click="goClose(scope.row.id)">关闭申请</el-link>
               </template>
+              <template
+               v-if="scope.row.state === '-1'||scope.row.state === '2'">
+               <el-link type="primary"
+                :underline="false"
+                @click="toLook(scope.row.id)">查看社团</el-link>
+              </template>
+              <template
+               v-if="scope.row.state === '2'">
+                <em></em>
+                <el-link type="primary"
+                :underline="false"
+                @click="toAdd(scope.row.id)">创建考勤</el-link>
+               </template>
             </template>
           </el-table-column>
         </el-table>
@@ -155,14 +169,6 @@ export default {
             item.className.push(it.grade + it.class_name)
           }
           item.className = item.className.join('、')
-
-          if (item.state === '1') {
-            item.stateName = '招募中'
-          } else if (item.state === '2') {
-            item.stateName = '进行中'
-          } else {
-            item.stateName = '已结束'
-          }
 
           item.time = (item.create_time.split(' '))[0] + ' 至 ' + (item.end_time.split(' '))[0]
         }

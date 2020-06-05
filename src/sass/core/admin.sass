@@ -82,8 +82,28 @@
   @extend %details
 
   // 课程
+  .tit-head
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: 1rem
+    background: #fff
+    margin-bottom: 1rem
+    border-radius: 0.2rem
+    h3 
+      color: #333
+      font-weight: bold
+      font-size: .8rem
+      margin-right: 2rem
+    .d-date
+      display: flex
+      align-items: center
   .ke
     padding: 1rem
+    .fcen
+      display: flex
+      align-items: center
+      justify-content: space-between
     dt
       overflow: hidden
       h3
@@ -95,7 +115,7 @@
         li
           overflow: hidden
           &:last-child
-            margin-top: .6rem
+            // margin-top: .6rem
         div
           float: left
           margin-right: 1rem
@@ -243,6 +263,8 @@
     padding: .2rem 0.5rem
     background:#C6C6B9
     color: #fff
+  .blueTd
+    color: #3DA347
   .m-tip
     font-weight: bold
     color: #333333
