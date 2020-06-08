@@ -124,7 +124,7 @@ export default {
     this.initial()
   },
   mounted () {
-    let userInfo = JSON.parse(sessionStorage.getItem('user'))
+    let userInfo = JSON.parse(localStorage.getItem('user'))
     if (userInfo.level === '1') {
       let item = this.items[0]
       item.path = 'YoungAdmin'

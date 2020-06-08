@@ -39,6 +39,20 @@
                   :underline="false"
                   @click="toViewGroup(scope.row.id)">社团信息</el-link>
                 <em></em>
+                 <el-link  type="primary"  v-if="scope.row.plan_file" target="_blank" :href="scope.row.plan_file" :underline="false">
+                   查看教学计划
+                </el-link>
+                <el-link  v-else target="_blank"  :underline="false">
+                   查看教学计划
+                </el-link>
+                <em></em>
+              <el-link  type="primary" v-if="scope.row.report_file" target="_blank" :href="scope.row.report_file" :underline="false">
+                查看学期总结
+              </el-link>
+              <el-link  v-else target="_blank"  :underline="false">
+                查看学期总结
+              </el-link>
+                <em></em>
               <el-link type="danger"
                 :underline="false"
                 @click="goDel(scope.row.id)">删除</el-link>

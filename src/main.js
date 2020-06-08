@@ -79,17 +79,27 @@ if (href.indexOf('localhost') > -1) {
   //   school_id: '15',
   //   username: 'p2475368'
   // }
-  Vue.prototype.cookie = '9e5dIGEjTrBpvWcC1gxFhcBBHEilpjMAYutllecgJahIDYYS'
+  // Vue.prototype.cookie = '9e5dIGEjTrBpvWcC1gxFhcBBHEilpjMAYutllecgJahIDYYS'
+  // var user = {
+  //   id: '15',
+  //   level: '1',
+  //   name: '少年宫老师',
+  //   subject: '3',
+  //   tel: '18812345678',
+  //   school_id: '15',
+  //   username: 'p4297940'
+  // }
+  Vue.prototype.cookie = '10aeWXuDdQ2wQfAskg6DghUh8b9WLKzZnS7pKipl6QgtoYI'
   var user = {
-    id: '15',
+    id: '27',
     level: '1',
-    name: '少年宫老师',
+    name: '45',
     subject: '3',
-    tel: '18812345678',
-    school_id: '15',
-    username: 'p4297940'
+    tel: '12345678912',
+    school_id: '8',
+    username: 'p9252749'
   }
-  sessionStorage.setItem('user', JSON.stringify(user))
+  localStorage.setItem('user', JSON.stringify(user))
   console.log(988)
 } else if (href.indexOf('test') > -1) {
   Vue.prototype.url = 'http://test.laoshi.xinzhimeiyu.com/'

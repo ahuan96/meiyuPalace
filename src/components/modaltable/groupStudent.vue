@@ -17,7 +17,10 @@
 
       <el-table-column label="申请图片  " prop="imgs">
         <template slot-scope="scope">
-          <el-image class="row-img" v-for="img in scope.row.imgs" :src="img" :key="img" alt="" :preview-src-list="srcList"></el-image>
+          <div class="row-box">
+            <el-image class="row-img"  :src="scope.row.imgs[0]"  alt="" :preview-src-list="scope.row.imgs"></el-image>
+            <span>  共{{scope.row.imgs.length}}张</span>
+          </div>
         </template>
       </el-table-column>
 
@@ -85,7 +88,7 @@ export default {
         this.items.forEach(item => {
           // item.file = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1591008867915&di=5e378bfeea43f42453db93479867d620&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2%2F58d86beb9ea90.jpg%3Fdown,https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1591008867915&di=5e378bfeea43f42453db93479867d620&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2%2F58d86beb9ea90.jpg%3Fdown'
           if (item.file) {
-            item.imgs = item.file.split(',')
+            item.imgs = item.file.split(';')
           } else {
             item.imgs = []
           }

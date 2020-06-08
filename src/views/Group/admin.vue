@@ -37,7 +37,9 @@
                v-if="scope.row.state === '1'">
                 <el-link type="primary"
                   :underline="false"
-                @click="toCheck(scope.row.id)">待审核名单</el-link>
+                @click="toCheck(scope.row.id)">待审核名单
+                <span style="color:#F56C6C;">({{scope.row.audit_num}}人)</span>
+                </el-link>
               </template>
               <template
                 v-if="scope.row.state === '1'">

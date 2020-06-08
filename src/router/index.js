@@ -54,7 +54,7 @@ export default new Router({
       path: '/',
       component: Home,
       beforeEnter: (to, from, next) => {
-        let user = JSON.parse(sessionStorage.getItem('user'))
+        let user = JSON.parse(localStorage.getItem('user'))
 
         if (user.level === '2') {
           next({path: '/teacher/admin/'})
@@ -80,7 +80,7 @@ export default new Router({
           path: '/teacher/admin/',
           component: TeacherAdmin,
           beforeEnter: (to, from, next) => {
-            let user = JSON.parse(sessionStorage.getItem('user'))
+            let user = JSON.parse(localStorage.getItem('user'))
             if (user.level === '1') {
               next({path: '/young/admin/'})
             } else {
@@ -117,7 +117,7 @@ export default new Router({
           path: '/young/admin/',
           component: YoungAdmin,
           beforeEnter: (to, from, next) => {
-            let user = JSON.parse(sessionStorage.getItem('user'))
+            let user = JSON.parse(localStorage.getItem('user'))
             if (user.level === '2') {
               next({path: '/teacher/admin/'})
             } else {
