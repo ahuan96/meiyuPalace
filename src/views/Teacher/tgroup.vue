@@ -57,11 +57,17 @@ export default {
   data () {
     return {
       id: '', // 老师id
-      items: [] // 社团数组
+      cnt: 0, // 列表总数
+      size: 20, // 每页数
+      items: [], // 社团数组
+      params: { // 列表请求参数
+        teacher_id: '',
+        page: 1
+      }
     }
   },
   mounted () {
-    this.id = this.$route.params.id
+    this.params.teacher_id = this.$route.params.id
     this.askDatas()
   },
   methods: {
@@ -70,7 +76,7 @@ export default {
       this.askDatas()
     },
     askDatas () {
-      let $rt = this.$get('palace_org/organizationList', {teacher_id: this.id})
+      let $rt = this.$get('palace_org/organizationList', this.params)
       $rt.then((rt) => {
         console.log(rt)
         this.cnt = rt.data.cnt

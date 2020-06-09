@@ -171,7 +171,7 @@
         <div class="m-tip">活动范围</div>
         <div class="m-cont">{{class_list}}</div>
         <div class="m-tip">上传截至时间</div>
-        <div class="m-cont">{{$timeformat(this.formData.end_time, 1)}}</div>
+        <div class="m-cont">{{$timeformat(this.formData.bm_end, 1)}}</div>
         <div class="m-tip">发起单位</div>
         <div class="m-cont">{{formData.organization}}</div>
      </div>

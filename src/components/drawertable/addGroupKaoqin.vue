@@ -200,11 +200,16 @@ export default {
      */
     toAdd () {
       const params = {
+        teacher_record: this.teacher_record,
         absenteeism_num: 0,
         attendance_num: 0,
         bsenteeism: [],
         queqin: [],
         org_id: this.tableData.org_id
+      }
+      if (!params.teacher_record) {
+        this.$err('请填写考勤记录')
+        return
       }
       for (let item of this.items) {
         if (item.absence === 0) {

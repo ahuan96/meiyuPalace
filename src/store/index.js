@@ -11,14 +11,11 @@ Vue.use(Vuex)
 let checkId = (rule, value, callback) => {
   if (!value) {
     return callback(new Error('身份证号不能为空'))
+  } else if (!/^\d{17}(\d|x)$/i.test(value)) {
+    callback(new Error('输入的格式错误'))
+  } else {
+    callback()
   }
-  setTimeout(() => {
-    if (!/^\d{17}(\d|x)$/i.test(value)) {
-      callback(new Error('输入的格式错误'))
-    } else {
-      callback()
-    }
-  }, 1000)
 }
 
 // 验证二次密码
@@ -26,6 +23,7 @@ let checkpwd = (rule, value, callback, source, options) => {
   if (!value) {
     return callback(new Error('请再次输入密码'))
   } else {
+    // console.log(this)
     // console.log(rule)
     // console.log(source)
     // console.log(options)

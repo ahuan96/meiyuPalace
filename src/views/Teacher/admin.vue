@@ -39,7 +39,7 @@
                   :underline="false"
                   @click="toViewGroup(scope.row.id)">社团信息</el-link>
                 <em></em>
-                 <el-link   v-if="scope.row.plan_file" target="_blank" :href="scope.row.plan_file" :underline="false">
+                 <el-link   v-if="scope.row.plan_file" target="_blank"  :underline="false">
                    已上传教学计划
                 </el-link>
                 <el-upload
@@ -55,7 +55,7 @@
                 :underline="false">上传教学计划</el-link>
               </el-upload>
               <em></em>
-              <el-link  v-if="scope.row.report_file" target="_blank" :href="scope.row.report_file" :underline="false">
+              <el-link  v-if="scope.row.report_file" target="_blank"  :underline="false">
                 已上传学期总结
               </el-link>
                 <el-upload
@@ -210,7 +210,7 @@ export default {
       // 表单密码验证
       formRulePassword: [
         ['password', {}],
-        ['password2', {}]
+        ['password', {}]
       ]
     }
   },

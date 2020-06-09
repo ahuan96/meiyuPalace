@@ -125,7 +125,7 @@ export default {
           { key: 'subject', value: null, placeholder: '选择学科' }
         ],
         searchCont: true,
-        placeholder: '请输入老师姓名',
+        placeholder: '查询内容',
         buttons: [
           { key: 'addNew', value: '新增老师' }
         ]
@@ -227,7 +227,7 @@ export default {
         // 老师数据
         this.items = rt.data.list
         this.cnt = rt.data.cnt
-        this.size = rt.data.pagesize
+        // this.size = rt.data.pagesize 默认20
 
         for (let item of this.items) {
           if (item.subject === '3') {

@@ -78,6 +78,10 @@ export default {
         if (!valid) {
           return false
         }
+        if (this.formData.password !== this.formData.pwd2) {
+          this.$err('密码输入不一致')
+          return
+        }
 
         // 提交
         let $rt = this.$post(submit.post, this.formData, {id: this.formData.id})
