@@ -69,16 +69,6 @@ Vue.component('ysModalConfirm', ysModalConfirm)
 const href = window.location.href
 if (href.indexOf('localhost') > -1) {
   Vue.prototype.url = 'http://test.laoshi.xinzhimeiyu.com/'
-  // Vue.prototype.cookie = '3696Otx8WWd%2B7Tdrdr6PyWa5A5%2F3WwgQQSzJD3u8rgclK5ZR'
-  // var user = {
-  //   id: '23',
-  //   level: '2',
-  //   name: '普通老师2',
-  //   subject: '1',
-  //   tel: '13312345678',
-  //   school_id: '15',
-  //   username: 'p2475368'
-  // }
   // Vue.prototype.cookie = '9e5dIGEjTrBpvWcC1gxFhcBBHEilpjMAYutllecgJahIDYYS'
   // var user = {
   //   id: '15',
@@ -112,7 +102,7 @@ if (href.indexOf('localhost') > -1) {
 // 路由检测
 router.beforeEach((to, from, next) => {
   if (!Vue.prototype.cookie) {
-    const loginUrl = 'http://test.laoshi.xinzhimeiyu.com/login/palace'
+    let loginUrl = Vue.prototype.url + 'login/palace'
     window.location.href = loginUrl
     return
   }

@@ -139,6 +139,7 @@
       color: #444444
       font-size: .65rem
       border: .05rem solid #CCCCCC
+      line-height: 1.65rem
 
     .el-input__icon
       color: #444444
@@ -317,8 +318,22 @@
 /**
  * 重置饿了么提示UI
  */
+// 提示框背景色
 .el-tooltip__popper.is-light
-  border-color: #999999
+  border-color: #84B5F0
+// 箭头背景色
+.el-tooltip__popper.el-tooltip__popper[x-placement^=right]
+    .popper__arrow::after
+      border-right-color: #84B5F0
+    .popper__arrowred
+      border-right-color: #84B5F0
+// 箭头边框
+.el-tooltip__popper
+   .popper__arrow
+      border-right-color: #84B5F0!important
+
+.draw_share_atooltip
+  background: #84B5F0 !important
 
   .list
     line-height: 1rem

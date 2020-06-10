@@ -149,7 +149,7 @@ export default {
       // 表单内容验证
       formRule: [
         ['select', { list: null }],
-        ['desc', {}],
+        ['cont', {}],
         ['idcard', {}],
         ['name', {}],
         ['password', {}],

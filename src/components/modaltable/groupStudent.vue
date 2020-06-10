@@ -84,20 +84,22 @@ export default {
       Object.assign(this.params, this.tableData)
 
       this.askDatas(() => {
-        console.log(this.items)
-        this.items.forEach(item => {
-          // item.file = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1591008867915&di=5e378bfeea43f42453db93479867d620&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2%2F58d86beb9ea90.jpg%3Fdown,https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1591008867915&di=5e378bfeea43f42453db93479867d620&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2%2F58d86beb9ea90.jpg%3Fdown'
-          if (item.file) {
-            item.imgs = item.file.split(';')
-          } else {
-            item.imgs = []
+        this.setImg()
+      })
+      this.toggleShow()
+    },
+    setImg () {
+      this.srcList = []
+      this.items.forEach(item => {
+        if (item.file) {
+          if (item.file[item.file.length - 1] === ';') {
+            item.file = item.file.substring(0, item.file.length - 1)
           }
-          this.srcList.push(...item.imgs)
-          console.log('imgs', item.imgs)
-          console.log('srcList', this.srcList)
-        })
-        console.log(222)
-        this.toggleShow()
+          item.imgs = item.file.split(';')
+        } else {
+          item.imgs = []
+        }
+        this.srcList.push(...item.imgs)
       })
     },
 
@@ -132,8 +134,11 @@ export default {
       params.student_id = params.student_id.join(',')
 
       let $rt = this.$get('palace_org/alterApplyState/', params)
+      let _this = this
       $rt.then((rt) => {
-        this.askDatas()
+        _this.askDatas(() => {
+          this.setImg()
+        })
       }).catch((rt) => {
       })
     },
@@ -160,8 +165,11 @@ export default {
       params.student_id = params.student_id.join(',')
 
       let $rt = this.$get('palace_org/alterApplyState/', params)
+      let _this = this
       $rt.then((rt) => {
-        this.askDatas()
+        this.askDatas(() => {
+          _this.setImg()
+        })
       }).catch((rt) => {
       })
     }
