@@ -263,9 +263,9 @@ export default {
       $edit.list = this.xueke2
     },
     setCellName (scope) {
-      // if (scope.row.level === '1' && scope.columnIndex === 0) {
-      //   return 'master'
-      // }
+      if (scope.row.level === '1' && scope.columnIndex === 0) {
+        return 'master'
+      }
       return ''
     },
     /**

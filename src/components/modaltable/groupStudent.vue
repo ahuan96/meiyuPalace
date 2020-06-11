@@ -17,7 +17,7 @@
 
       <el-table-column label="申请图片  " prop="imgs">
         <template slot-scope="scope">
-          <div class="row-box">
+          <div class="row-box" v-if="scope.row.imgs && scope.row.imgs.length > 0">
             <el-image class="row-img"  :src="scope.row.imgs[0]"  alt="" :preview-src-list="scope.row.imgs"></el-image>
             <span>  共{{scope.row.imgs.length}}张</span>
           </div>
@@ -69,7 +69,6 @@ export default {
   data () {
     return {
       selection: [], // 已勾选列表
-      srcList: [],
       params: {} // 参数
     }
   },
@@ -82,14 +81,15 @@ export default {
      */
     initial () {
       Object.assign(this.params, this.tableData)
-
       this.askDatas(() => {
         this.setImg()
       })
       this.toggleShow()
     },
     setImg () {
-      this.srcList = []
+      console.log('aaa')
+      console.log(this.items)
+
       this.items.forEach(item => {
         if (item.file) {
           if (item.file[item.file.length - 1] === ';') {
@@ -99,7 +99,6 @@ export default {
         } else {
           item.imgs = []
         }
-        this.srcList.push(...item.imgs)
       })
     },
 
@@ -110,6 +109,17 @@ export default {
      */
     selectionChange (arr) {
       this.selection = arr
+    },
+    /**
+     * [pageChange 切换页码]
+     * @param  {[Int]} p [页码]
+     * @return {[]} []
+     */
+    pageChange (p) {
+      this.params.page = p
+      this.askDatas(() => {
+        this.setImg()
+      })
     },
 
     /**

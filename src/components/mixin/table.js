@@ -33,7 +33,11 @@ export default {
       $rt.then((rt) => {
         this.items = rt.data.list
         this.cnt = rt.data.cnt
-        this.size = rt.data.size
+        if (rt.data.pagesize) {
+          this.size = rt.data.pagesize
+        } else {
+          this.size = rt.data.size
+        }
 
         if (cbk) cbk()
       }).catch((rt) => {
