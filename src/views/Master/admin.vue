@@ -11,7 +11,7 @@
           :cell-class-name="setCellName"
           :data="items">
 
-          <el-table-column label="系统帐号" prop="username"></el-table-column>
+          <el-table-column class-name="mar_left" label="系统帐号" prop="username"></el-table-column>
 
           <el-table-column label="老师姓名" prop="name">
               <template slot-scope="scope">

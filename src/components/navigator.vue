@@ -127,7 +127,7 @@ export default {
     let userInfo = JSON.parse(localStorage.getItem('user'))
     if (userInfo.level === '1') {
       let item = this.items[0]
-      item.path = 'YoungAdmin'
+      item.path = 'MasterAdmin'
       this.$set(this.items, 0, item)
     }
   }
