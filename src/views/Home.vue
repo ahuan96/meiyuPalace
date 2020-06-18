@@ -72,7 +72,7 @@
 
           <el-table-column label="交卷进度" width="200">
             <template slot-scope="scope">
-              <el-progress style="float:left;width:7.5rem;margin-right:.5rem;"
+              <el-progress style="float:left;width:7.5rem;margin-right:.5rem"
                 :text-inside="true"
                 :stroke-width="17"
                 :percentage="scope.row.percent"></el-progress>

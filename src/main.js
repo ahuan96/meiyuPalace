@@ -106,6 +106,7 @@ router.beforeEach((to, from, next) => {
     window.location.href = loginUrl
     return
   }
+
   next()
 })
 

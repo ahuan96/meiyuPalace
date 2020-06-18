@@ -34,7 +34,7 @@
         <el-form-item label="活动内容" prop="active_content">
           <el-col
             :span="15">
-            <el-input type="textarea" placeholder="请输入活动内容"
+            <el-input class="high_text" type="textarea" placeholder="请输入活动内容"
               v-model="formData.active_content"></el-input>
           </el-col>
         </el-form-item>
@@ -138,10 +138,11 @@
 
         <el-form-item>
           <div class="submit">
-            <el-button type="primary"
-              @click="submitForm('elform')">保存并提交</el-button>
-              <el-button type="primary"
+             <el-button type="primary"
               @click="toViewDialog('elform')">预览</el-button>
+            <el-button type="primary">保存</el-button>
+            <el-button type="primary"
+              @click="submitForm('elform')">发布</el-button>
             <el-button type="info"
               @click="cancelForm">取消</el-button>
           </div>

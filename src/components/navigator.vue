@@ -124,11 +124,14 @@ export default {
     this.initial()
   },
   mounted () {
-    let userInfo = JSON.parse(localStorage.getItem('user'))
+    let userInfo = window.Global.userinfo
     if (userInfo.level === '1') {
       let item = this.items[0]
       item.path = 'MasterAdmin'
       this.$set(this.items, 0, item)
+      this.$router.push({name: 'MasterAdmin'})
+    } else {
+      this.$router.push({name: 'TeacherAdmin'})
     }
   }
 }

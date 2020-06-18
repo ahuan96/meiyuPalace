@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 import Router from 'vue-router'
 
-import Home from '@/views/Home.vue'
+// import Home from '@/views/Home.vue'
 import Failed from '@/views/404.vue'
 
 import Teacher from '@/views/Teacher/index.vue'
@@ -27,18 +27,8 @@ export default new Router({
      * [Home 首页]
      */
     {
-      name: 'Home',
-      path: '/',
-      component: Home,
-      beforeEnter: (to, from, next) => {
-        let user = JSON.parse(localStorage.getItem('user'))
-
-        if (user.level === '2') {
-          next({path: '/teacher/admin/'})
-        } else if (user.level === '1') {
-          next({path: '/master/admin/'})
-        }
-      }
+      name: '',
+      path: '/'
     },
 
     /**
@@ -55,15 +45,7 @@ export default new Router({
         {
           name: 'TeacherAdmin',
           path: '/teacher/admin/',
-          component: TeacherAdmin,
-          beforeEnter: (to, from, next) => {
-            let user = JSON.parse(localStorage.getItem('user'))
-            if (user.level === '1') {
-              next({path: '/master/admin/'})
-            } else {
-              next()
-            }
-          }
+          component: TeacherAdmin
         },
         {
           name: 'TeacherTgroup',
@@ -92,15 +74,7 @@ export default new Router({
         {
           name: 'MasterAdmin',
           path: '/master/admin/',
-          component: MasterAdmin,
-          beforeEnter: (to, from, next) => {
-            let user = JSON.parse(localStorage.getItem('user'))
-            if (user.level === '2') {
-              next({path: '/teacher/admin/'})
-            } else {
-              next()
-            }
-          }
+          component: MasterAdmin
         }
       ]
     },

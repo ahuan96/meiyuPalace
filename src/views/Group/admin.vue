@@ -7,13 +7,25 @@
 
     <div class="main long">
       <div class="mid">
+
         <el-table stripe height="100%"
           :data="items">
           <el-table-column label="编号" prop="id" width="80" fixed></el-table-column>
 
           <el-table-column label="社团名称" prop="name" min-width="120" fixed></el-table-column>
 
-          <el-table-column label="招募范围" prop="className" min-width="300"></el-table-column>
+          <el-table-column label="招募范围" prop="className" min-width="300">
+            <template slot-scope="scope">
+              <el-popover
+                placement="top-start"
+                :title="scope.row.name"
+                width="300"
+                trigger="hover"
+                :content="scope.row.classAllName">
+                <span slot="reference">{{scope.row.className}}</span>
+            </el-popover>
+            </template>
+          </el-table-column>
 
           <el-table-column label="活动时间" prop="time" width="200"></el-table-column>
 
@@ -34,7 +46,7 @@
           <el-table-column label="操作" width="340" fixed="right">
             <template slot-scope="scope">
               <template
-               v-if="scope.row.state === '1'">
+               v-if="scope.row.state === '1'&&scope.row.isMe">
                 <el-link type="primary"
                   :underline="false"
                 @click="toCheck(scope.row.id)">待审核名单
@@ -42,7 +54,7 @@
                 </el-link>
               </template>
               <template
-                v-if="scope.row.state === '1'">
+                v-if="scope.row.state === '1'&&scope.row.isMe">
                 <em></em>
                 <el-link type="danger"
                   :underline="false"
@@ -52,14 +64,24 @@
                v-if="scope.row.state === '-1'||scope.row.state === '2'">
                <el-link type="primary"
                 :underline="false"
-                @click="toLook(scope.row.id)">查看社团</el-link>
+                @click="toLook(scope.row.id,scope.row.isMe)">查看社团</el-link>
               </template>
               <template
-               v-if="scope.row.state === '2'">
+               v-if="scope.row.state === '2'&&scope.row.isMe">
                 <em></em>
                 <el-link type="primary"
                 :underline="false"
                 @click="toAdd(scope.row.id)">创建考勤</el-link>
+               </template>
+               <template
+               v-if="scope.row.state === '3'&&scope.row.isMe">
+                <em></em>
+                <el-link type="primary"
+                :underline="false">继续编辑</el-link>
+                <el-link type="primary"
+                :underline="false">发布</el-link>
+                <el-link type="danger"
+                :underline="false">删除</el-link>
                </template>
             </template>
           </el-table-column>
@@ -120,9 +142,7 @@ export default {
           { key: 'state', value: null, placeholder: '选择状态' }
         ],
         keywords: true,
-        buttons: [
-          { key: 'addNew', value: '创建社团' }
-        ]
+        buttons: []
       },
 
       // 表格数据
@@ -136,7 +156,8 @@ export default {
       tableDetailCheck: { info: 'palace_org/getOrganizationApply/', column: 'org_' },
 
       // 确认内容数据
-      confirmData: { k: 'group', v: 0 }
+      confirmData: { k: 'group', v: 0 },
+      userinfo: window.Global.userinfo
     }
   },
   watch: {
@@ -149,8 +170,12 @@ export default {
      * @return {[]} []
      */
     initPages () {
+      console.log('userinfo', this.userinfo)
+      // 判断按钮权限
+      if (window.Global.userinfo.level === '1') {
+        this.searchData.buttons = [{ key: 'addNew', value: '创建社团' }]
+      }
       this.askDatas()
-
       this.setSearchData()
     },
 
@@ -166,16 +191,53 @@ export default {
         this.cnt = rt.data.cnt
         this.size = rt.data.pagesize
         for (let item of this.items) {
-          item.className = []
+          // 招募范围名称 列表显示
+          item.className = this.resetClassName(item.class)
+          // 招募范围名称 弹出显示
+          item.classAllName = []
           for (let it of item.class) {
-            item.className.push(it.grade + it.class_name)
+            item.classAllName.push(it.grade + it.class_name)
           }
-          item.className = item.className.join('、')
+          item.classAllName = item.classAllName.join('、')
 
+          let teacherArr = item.teacher_ids.split(',')
+          if (teacherArr.indexOf(this.userinfo.id) > -1) {
+            item.isMe = true
+          }
           item.time = (item.create_time.split(' '))[0] + ' 至 ' + (item.end_time.split(' '))[0]
         }
       }).catch((rt) => {
       })
+    },
+    /**
+     *[resetClassName 重置招募范围名称显示]
+     *@param  {[Array]} classList [班级数组]
+     *@return {[String]} [重置名称]
+     */
+    resetClassName (classList) {
+      if (classList.length === 0) {
+        return ''
+      }
+      let groupArr = []
+      let roomArr = []
+      let reStr = ''
+      for (let item of classList) {
+        roomArr.push(item.class_name)
+        if (groupArr.indexOf(item.grade) === -1) {
+          groupArr.push(item.grade)
+        }
+      }
+      if (groupArr.length === 1) {
+        reStr = roomArr.join('、')
+        if (roomArr.length === 1) {
+          return groupArr[0] + reStr
+        } else {
+          return groupArr[0] + reStr + '等共' + roomArr.length + '个班级'
+        }
+      } else {
+        reStr = groupArr.join('、')
+        return reStr + '等共' + roomArr.length + '个班级'
+      }
     },
 
     /**
@@ -236,9 +298,9 @@ export default {
      * @param  {[Int]} id [社团ID]
      * @return {[]} []
      */
-    toLook (id) {
+    toLook (id, isMe) {
       this.tableData.org_id = id
-      this.$refs.ystable.initial()
+      this.$refs.ystable.initial(isMe)
     },
 
     /**

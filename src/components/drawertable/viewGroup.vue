@@ -21,13 +21,13 @@
 
               <el-table-column label="社团实践分" prop="point" width="120">
                 <template slot-scope="scope">
-                  <input type="text" :value=scope.row.point @change="ChangePoint($event,scope.row)" class="el-input__inner" placeholder="请输入分数">
+                  <input :class="!isMe?'disabled_input':''" type="text" :disabled="!isMe"  :value=scope.row.point @change="ChangePoint($event,scope.row)" class="el-input__inner" placeholder="请输入分数">
                 </template>
               </el-table-column>
 
               <el-table-column label="备注" prop="remark" width="150">
                 <template slot-scope="scope">
-                  <input type="text" :value=scope.row.remark @change="ChangeRemark($event,scope.row)" class="el-input__inner" placeholder="请输入备注">
+                  <input :class="!isMe?'disabled_input':''" type="text" :disabled="!isMe" :value=scope.row.remark @change="ChangeRemark($event,scope.row)" class="el-input__inner" placeholder="请输入备注">
                 </template>
               </el-table-column>
             </el-table>
@@ -104,7 +104,8 @@ export default {
         buttons: [
           { key: 'addNew', value: '新增学生' }
         ],
-        files: { key: 'fileDeal', value: null, placeholder: null, model: '' }
+        files: { key: 'fileDeal', value: null, placeholder: null, model: '' },
+        isMe: ''
       },
 
       // 确认内容数据
@@ -166,9 +167,10 @@ export default {
      * [initial 初始化组件]
      * @return {[]} []
      */
-    initial () {
+    initial (isMe) {
       Object.assign(this.params, this.tableData)
-
+      console.log(isMe)
+      this.isMe = isMe
       this.askDatas(() => {
         this.setSearchData()
         this.setFormData()

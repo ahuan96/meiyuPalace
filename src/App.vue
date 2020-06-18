@@ -3,6 +3,7 @@
     v-if="loading">
     <div class="container">
       <ys-navigator
+        v-if="flag"
         v-on:_hrefTo="hrefTo"
         v-on:_pathTo="pathTo"></ys-navigator>
 
@@ -33,7 +34,8 @@ export default {
   data () {
     return {
       loading: true, // 用户信息加载状态
-      iframe: false // 兼容旧代码模块
+      iframe: false, // 兼容旧代码模块
+      flag: false
     }
   },
   watch: {
@@ -120,12 +122,14 @@ export default {
     }
   },
   created () {
-    // if (this.$route.path !== '/') {
-    //   window.location.href = '/'
-    //   return
-    // }
-
-    this.initApp()
+    let $rt = this.$get('palace_teacher/details', {})
+    // 用户信息
+    $rt.then(rt => {
+      const info = rt.data.details
+      window.Global.userinfo = info
+      console.log('info', info, window.Global.userinfo)
+      this.flag = true
+    })
   },
   mounted () {
   }
