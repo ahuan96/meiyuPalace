@@ -40,6 +40,7 @@
               <div v-if="scope.row.state==='-1'">已结束</div>
               <div class="blueTd" v-if="scope.row.state==='1'">招募中</div>
               <div class="blueTd" v-if="scope.row.state==='2'">进行中</div>
+              <div class="" v-if="scope.row.state==='3'">待发布</div>
             </template>
           </el-table-column>
 
@@ -52,9 +53,10 @@
                 @click="toCheck(scope.row.id)">待审核名单
                 <span style="color:#F56C6C;">({{scope.row.audit_num}}人)</span>
                 </el-link>
-              </template>
-              <template
-                v-if="scope.row.state === '1'&&scope.row.isMe">
+                <em></em>
+                <el-link type="danger"
+                  :underline="false"
+                  @click="toBack(scope.row.id)">撤回</el-link>
                 <em></em>
                 <el-link type="danger"
                   :underline="false"
@@ -75,13 +77,14 @@
                </template>
                <template
                v-if="scope.row.state === '3'&&scope.row.isMe">
+                <el-link type="primary"
+                :underline="false" @click="toEdit(scope.row.id)">继续编辑</el-link>
                 <em></em>
                 <el-link type="primary"
-                :underline="false">继续编辑</el-link>
-                <el-link type="primary"
-                :underline="false">发布</el-link>
+                :underline="false" @click="toPublish(scope.row.id)">发布</el-link>
+                <em></em>
                 <el-link type="danger"
-                :underline="false">删除</el-link>
+                :underline="false" @click="goDel(scope.row.id)">删除</el-link>
                </template>
             </template>
           </el-table-column>
@@ -101,6 +104,10 @@
     <ys-modal-confirm ref="ysconfirm"
       :confirmData="confirmData"
       v-on:confirmCalBak="toClose"></ys-modal-confirm>
+      <!-- 确认模态框 -->
+    <ys-modal-confirm ref="ysconfirm2"
+      :confirmData="confirmData2"
+      v-on:confirmCalBak="toDel"></ys-modal-confirm>
 
     <!-- 表格模态框 -->
     <ys-drawer-table ref="ystable"
@@ -157,6 +164,7 @@ export default {
 
       // 确认内容数据
       confirmData: { k: 'group', v: 0 },
+      confirmData2: { k: 'group', v: 1 },
       userinfo: window.Global.userinfo
     }
   },
@@ -340,6 +348,51 @@ export default {
      */
     toClose (_params) {
       let $rt = this.$get('palace_org/closeOrganization/', _params)
+      $rt.then((rt) => {
+        this.askDatas()
+      }).catch((rt) => {
+      })
+    },
+    /**
+     * [toPublish 发布]
+     * @param  {[String]} id [id]
+     * @return {[]} []
+     */
+    toPublish (id) {
+      let $rt = this.$get('palace_org/pubOrganization/', {org_id: id})
+      $rt.then((rt) => {
+        this.askDatas()
+      }).catch((rt) => {
+      })
+    },
+    /**
+     * [toBack 撤回]
+     * @param  {[String]} id [id]
+     * @return {[]} []
+     */
+    toBack (id) {
+      let $rt = this.$get('palace_org/revocationOrganization/', {org_id: id})
+      $rt.then((rt) => {
+        this.askDatas()
+      }).catch((rt) => {
+      })
+    },
+    /**
+     * [goClose 准备删除社团]
+     * @param  {[Int]} id [用户ID]
+     * @return {[]} []
+     */
+    goDel (id) {
+      const params = { org_id: id }
+      this.$refs.ysconfirm2.toggleShow(params)
+    },
+    /**
+     * [toDel 删除社团]
+     * @param  {[String]} id [id]
+     * @return {[]} []
+     */
+    toDel (_params) {
+      let $rt = this.$get('palace_org/deleteOrg/', _params)
       $rt.then((rt) => {
         this.askDatas()
       }).catch((rt) => {

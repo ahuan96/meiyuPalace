@@ -140,9 +140,10 @@
           <div class="submit">
              <el-button type="primary"
               @click="toViewDialog('elform')">预览</el-button>
-            <el-button type="primary">保存</el-button>
             <el-button type="primary"
-              @click="submitForm('elform')">发布</el-button>
+              @click="submitForm('elform',3)">保存</el-button>
+            <el-button type="primary"
+              @click="submitForm('elform',1)">发布</el-button>
             <el-button type="info"
               @click="cancelForm">取消</el-button>
           </div>
@@ -182,6 +183,7 @@
 
 <script>
 import mixform from '@/components/mixin/form'
+import { mapGetters } from 'vuex'
 
 export default {
   mixins: [mixform],
@@ -235,10 +237,13 @@ export default {
       ],
 
       // 表单提交
-      formSubmit: { info: 'GetProjectDetail' }
+      formSubmit: { info: 'palace_org/getOrganization', column: 'org_' }
     }
   },
   computed: {
+    ...mapGetters([
+      'nianji'
+    ])
   },
   methods: {
     /**
@@ -249,6 +254,90 @@ export default {
       this.askDatas(() => {
         this.setFormData()
         this.setFormDetails(this.formRule)
+        this.getGroupDetail()
+      })
+    },
+    /**
+     *[getGroupDetail 社团详情-回显]
+     *@return {[]} []
+     */
+    getGroupDetail () {
+      let orgId = this.$route.query.id
+      if (!orgId) { return }
+      let $rt = this.$get(this.formSubmit.info, {org_id: orgId})
+      $rt.then((rt) => {
+        console.log(rt)
+        let data = rt.data.data
+        this.formData.name = data.name
+        this.formData.active_content = data.active_content
+        this.formData.condition = data.condition
+        this.formData.num = data.num
+        this.formData.end_time = data.end_time
+        this.formData.bm_end = data.bm_end
+        this.formData.img_url = data.img_url
+        this.rules.end_time[2]['data'] = data.end_time
+        this.timeValue(data.end_time, 1)
+        this.rules.bm_end[2]['data'] = data.bm_end
+        this.timeValue(data.bm_end, 1)
+        this.formData.organization = data.organization
+        // 初始化老师 去掉拼接开始的逗号
+        this.formData.teacher_ids = (data.teacher_ids[0] === ',') ? data.teacher_ids.substring(1) : data.teacher_ids
+        this.rules.teacher_ids[2]['data'] = this.formData.teacher_ids.split(',')
+        // 初始化班级-回显
+        this.initClass(data.class)
+      })
+    },
+    /**
+     *|String,Object,Number,Boolean|
+     *[initClass 初始化班级]
+     *@param  {[Array]} classList [参数名]
+     *@return {[]} []
+     */
+    initClass (classList) {
+      this.stepArr = []
+      for (let item of classList) {
+        item.grade = parseInt(item.grade)
+        item.step = this.getStep(parseInt(item.grade))
+        item.grades = []
+        let grades = []
+        if (item.step === 0) {
+          grades = [ 1, 2, 3, 4, 5, 6 ]
+        } else if (item.step === 1) {
+          grades = [7, 8, 9]
+        } else if (item.step === 2) {
+          grades = [10, 11, 12]
+        }
+        for (var i = 0; i < this.room_list.length; i++) {
+          for (var j = 0; j < grades.length; j++) {
+            if (this.room_list[i].grade_key === grades[j]) {
+              item.grades.push(this.room_list[i])
+            }
+          }
+          if (this.room_list[i].grade_key === item.grade) {
+            this.room_list[i].rooms.forEach((room) => {
+              room.active = false
+            })
+            item.class = this.room_list[i].rooms
+          }
+        }
+        item.flag = true
+        for (let item2 of this.stepArr) {
+          if (item.grade === item2.grade) {
+            item.flag = false
+          }
+        }
+        if (item.flag) {
+          this.stepArr.push({step: item.step, grade: parseInt(item.grade), grades: item.grades, class: item.class})
+        }
+      }
+      this.stepArr.forEach((step) => {
+        step.class.forEach((room) => {
+          for (let item of classList) {
+            if (item.room_id === room.id) {
+              room.active = true
+            }
+          }
+        })
       })
     },
 
@@ -282,7 +371,7 @@ export default {
      * @param  {[String]} form [表单]
      * @return {[]} []
      */
-    submitForm (form) {
+    submitForm (form, state) {
       console.log(this.rules)
       this.$refs[form].validate((valid) => {
         if (!valid) return false
@@ -300,11 +389,15 @@ export default {
             }
           })
         })
-        console.log(roomids)
-        console.log(this.formData)
         this.formData.room_ids = roomids
+        this.formData.state = state
         let $rt = this.$post('palace_org/createOrganization', this.formData)
         $rt.then((rt) => {
+          this.$notify({
+            title: '成功',
+            message: state === 1 ? '发布社团成功' : '保存社团成功',
+            type: 'success'
+          })
           this.$router.push({ name: 'Group' })
         }).catch((rt) => {
         })
@@ -322,6 +415,7 @@ export default {
     },
     teacherIds (ids) {
       this.formData.teacher_ids = ids.join(',')
+      console.log(this.formData.teacher_ids)
     },
     roomIds (ids) {
       console.log('ids', ids)
@@ -481,15 +575,12 @@ export default {
       } else if (value === 2) {
         grades = [10, 11, 12]
       }
-      console.log(grades)
       this.stepArr[index].grade = ''
       this.stepArr[index].grades = []
       this.stepArr[index].class = []
       for (var i = 0; i < this.room_list.length; i++) {
         for (var j = 0; j < grades.length; j++) {
-          // console.log('aaa', this.room_list[i].grade_key, grades[j])
           if (this.room_list[i].grade_key === grades[j]) {
-            console.log('bb', this.room_list[i].grade_key, grades[j])
             this.stepArr[index].grades.push(this.room_list[i])
           }
         }
