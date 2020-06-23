@@ -375,7 +375,7 @@ export default {
       console.log(this.rules)
       this.$refs[form].validate((valid) => {
         if (!valid) return false
-        // 提交
+        // 提 交
         let roomids = ''
         this.stepArr.forEach(item => {
           item.class.forEach(item2 => {
