@@ -13,7 +13,7 @@
         <el-form-item label="社团名称" prop="name">
           <el-col
             :span="15">
-            <el-input placeholder="请输入社团名称"
+            <el-input placeholder="请输入社团名称" :disabled="isDis"
               v-model="formData.name"></el-input>
           </el-col>
         </el-form-item>
@@ -48,11 +48,11 @@
         </el-form-item>
 
         <el-form-item label="招募范围" prop="grade">
-          <div><el-checkbox @change="changeStepAll" v-model="isStepAll">所有年级班级</el-checkbox></div>
+          <div><el-checkbox :disabled="isDis" @change="changeStepAll" v-model="isStepAll">所有年级班级</el-checkbox></div>
             <div v-for="(step,index) in stepArr" :key="index">
               <el-select placeholder="请选择阶段"
               @change="changeStep(step.step,index)"
-              v-model="step.step">
+              :disabled="isDis" v-model="step.step">
               <el-option
                 :key="item.value"
                 :label="item.label"
@@ -62,7 +62,7 @@
             </el-select>
             <el-select placeholder="请选择年级"
               @change="changeGrade(index , step.grade)"
-              v-model="step.grade">
+              :disabled="isDis" v-model="step.grade">
               <el-option
                 :key="item.grade_key"
                 :label="item.grade"
@@ -70,15 +70,17 @@
                 v-for="item in step.grades">
               </el-option>
             </el-select>
-             <div class="add-btn" v-if="index == 0" @click="addStep">
+            <template v-if="!isDis">
+               <div class="add-btn" v-if="index == 0" @click="addStep">
                <i class="el-icon-plus"></i>
              </div>
              <div class="add-btn"  @click="delStep(index)">
                <i class="el-icon-minus"></i>
              </div>
+            </template>
              <div class="class-list">
                <template v-for="(item,index2) in step.class" >
-                  <div class="class-item" :class="item.active?'class-item-active':''" @click="changeRooms(index,index2)" :key="index2">{{item.name}}</div>
+                  <div class="class-item" :class="item.active?'class-item-active':''" @click="!isDis&&changeRooms(index,index2)" :key="index2">{{item.name}}</div>
                </template>
              </div>
             </div>
@@ -87,7 +89,7 @@
           <el-col
             :span="15">
             <el-input placeholder="请输入招募人数"
-              v-model="formData.num"></el-input>
+             :disabled="isDis" v-model="formData.num"></el-input>
           </el-col>
         </el-form-item>
 
@@ -96,7 +98,7 @@
           <el-col
             :span="15">
             <el-date-picker type="date" placeholder="请选择活动结束时间"
-              @change="timeValue(rules.end_time[2]['data'],1)"
+              @change="timeValue(rules.end_time[2]['data'],1)" :disabled="isDis"
               v-model="rules.end_time[2]['data']">
             </el-date-picker>
           </el-col>
@@ -106,7 +108,7 @@
           <el-col
             :span="15">
             <el-date-picker type="date" placeholder="请选择申请截止时间"
-              @change="timeValue(rules.bm_end[2]['data'],2)"
+              @change="timeValue(rules.bm_end[2]['data'],2)" :disabled="isDis"
               v-model="rules.bm_end[2]['data']">
             </el-date-picker>
           </el-col>
@@ -116,7 +118,7 @@
         <el-form-item label="活动老师" prop="teacher_ids">
           <el-col
             :span="15">
-            <el-select multiple placeholder="请选择活动老师"
+            <el-select multiple placeholder="请选择活动老师" :disabled='isDis'
               v-model="rules.teacher_ids[2]['data']" @change="teacherIds">
               <el-option
                 :key="item.id"
@@ -193,6 +195,7 @@ export default {
   ],
   data () {
     return {
+      isDis: false, // 是否禁用关键词
       url_name: '',
       dialogVisible: false,
       class_list: '',
@@ -251,6 +254,10 @@ export default {
      * @return {[]} []
      */
     initWeb () {
+      // 如果是继续编辑 关键词不能修改
+      if (this.$route.query.state === 1) {
+        this.isDis = true
+      }
       this.askDatas(() => {
         this.setFormData()
         this.setFormDetails(this.formRule)
@@ -375,7 +382,7 @@ export default {
       console.log(this.rules)
       this.$refs[form].validate((valid) => {
         if (!valid) return false
-        // 提 交
+        // 提交
         let roomids = ''
         this.stepArr.forEach(item => {
           item.class.forEach(item2 => {

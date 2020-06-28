@@ -78,7 +78,7 @@
                <template
                v-if="scope.row.state === '3'&&scope.row.isMe">
                 <el-link type="primary"
-                :underline="false" @click="toEdit(scope.row.id)">继续编辑</el-link>
+                :underline="false" @click="toEdit(scope.row.id,1)">继续编辑</el-link>
                 <em></em>
                 <el-link type="primary"
                 :underline="false" @click="toPublish(scope.row.id)">发布</el-link>
@@ -149,7 +149,7 @@ export default {
           { key: 'state', value: null, placeholder: '选择状态' }
         ],
         keywords: true,
-        buttons: []
+        buttons: [{ key: 'addNew', value: '创建社团' }]
       },
 
       // 表格数据
@@ -179,10 +179,6 @@ export default {
      */
     initPages () {
       console.log('userinfo', this.userinfo)
-      // 判断按钮权限
-      if (window.Global.userinfo.level === '1') {
-        this.searchData.buttons = [{ key: 'addNew', value: '创建社团' }]
-      }
       this.askDatas()
       this.setSearchData()
     },
@@ -293,14 +289,14 @@ export default {
      * @param  {[Int]} id [社团ID]
      * @return {[]} []
      */
-    toEdit (id) {
+    toEdit (id, state) {
       const push = { name: 'GroupAdd', query: {} }
       if (id) {
         push.query.id = id
+        push.query.state = state // 如果是继续编辑传1
       }
       this.$router.push(push)
     },
-
     /**
      * [toLook 查看社团]
      * @param  {[Int]} id [社团ID]
