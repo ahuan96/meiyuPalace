@@ -204,7 +204,7 @@ export default {
       confirmData: { k: 'project', buttons: [{ name: '我知道了' }] },
       // 表单数据
       formData: {
-        id: this.$route.query.id,
+        org_id: this.$route.query.id,
         name: '',
         active_content: '',
         condition: '',
@@ -398,7 +398,14 @@ export default {
         })
         this.formData.room_ids = roomids
         this.formData.state = state
-        let $rt = this.$post('palace_org/createOrganization', this.formData)
+        let url = 'palace_org/createOrganization'
+
+        // 如果是继续编辑
+        if (this.$route.query.state === 1) {
+          url = 'palace_org/updateOrganization'
+        }
+        let $rt = this.$post(url, this.formData)
+
         $rt.then((rt) => {
           this.$notify({
             title: '成功',

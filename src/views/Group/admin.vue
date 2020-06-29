@@ -149,7 +149,7 @@ export default {
           { key: 'state', value: null, placeholder: '选择状态' }
         ],
         keywords: true,
-        buttons: [{ key: 'addNew', value: '创建社团' }]
+        buttons: []
       },
 
       // 表格数据
@@ -178,7 +178,11 @@ export default {
      * @return {[]} []
      */
     initPages () {
-      console.log('userinfo', this.userinfo)
+      // console.log('userinfo', this.userinfo)
+      // 管理员显示创建社团按钮
+      if (this.userinfo.level === '1') {
+        this.searchData.buttons = [{ key: 'addNew', value: '创建社团' }]
+      }
       this.askDatas()
       this.setSearchData()
     },
