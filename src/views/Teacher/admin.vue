@@ -268,12 +268,20 @@ export default {
     beforeAvatarUpload (file) {
     },
     handleAvatarSuccess (res, file) {
-      this.$notify({
-        title: '成功',
-        message: '上传文件成功',
-        type: 'success'
-      })
-      this.initPages()
+      if (res.err_code === 0) {
+        this.$notify({
+          title: '成功',
+          message: '上传文件成功',
+          type: 'success'
+        })
+        this.initPages()
+      } else {
+        this.$notify({
+          title: '错误',
+          message: res.msg,
+          type: 'error'
+        })
+      }
     },
     /**
      * [setSearchData 设置查询内容数据]
