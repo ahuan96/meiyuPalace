@@ -27,23 +27,30 @@
           <el-table-column label="操作" width="340" >
             <template slot-scope="scope" >
               <div style="display:flex;flex-wrap:wrap;align-items: center;">
-                <el-link type="primary"
-                :underline="false"
-                @click="toEdit(scope.row.id)">修改信息</el-link>
-              <em></em>
-              <el-link type="primary"
-                :underline="false"
-                @click="toReset(scope.row.id)">修改密码</el-link>
+                <template v-if="(curTeacher.id == scope.row.id)">
+                  <el-link type="primary"
+                  :underline="false"
+                  @click="toEdit(scope.row.id)">修改信息</el-link>
+                  <em></em>
+                  <el-link type="primary"
+                    :underline="false"
+                    @click="toReset(scope.row.id)">修改密码</el-link>
+                </template>
+                <template v-else>
+                  <el-link :underline="false">修改信息</el-link>
+                  <em></em>
+                  <el-link :underline="false">修改密码</el-link>
+                </template>
                 <em></em>
                  <el-link type="primary"
                   :underline="false"
                   @click="toViewGroup(scope.row.id)">社团信息</el-link>
                 <em></em>
-                 <el-link   v-if="scope.row.plan_file" target="_blank"  :underline="false">
+                 <el-link   v-if="scope.row.plan_file && (curTeacher.id == scope.row.id)" target="_blank"  :underline="false">
                    已上传教学计划
                 </el-link>
                 <el-upload
-                  v-else
+                  v-else-if="(curTeacher.id == scope.row.id)"
                   class="avatar-uploader"
                   :action="action"
                   :show-file-list="false"
@@ -54,12 +61,15 @@
                 <el-link type="primary"
                 :underline="false">上传教学计划</el-link>
               </el-upload>
+               <el-link   v-else target="_blank"  :underline="false">
+                   上传教学计划
+                </el-link>
               <em></em>
-              <el-link  v-if="scope.row.report_file" target="_blank"  :underline="false">
+              <el-link  v-if="scope.row.report_file && (curTeacher.id == scope.row.id)" target="_blank"  :underline="false">
                 已上传学期总结
               </el-link>
                 <el-upload
-                v-else
+                v-else-if="(curTeacher.id == scope.row.id)"
                   class="avatar-uploader"
                   :action="action2"
                   :show-file-list="false"
@@ -68,8 +78,11 @@
                   list-type="text"
                   :before-upload="beforeAvatarUpload">
                 <el-link type="primary"
-                :underline="false">上传学期总结</el-link>
-              </el-upload>
+                  :underline="false">上传学期总结</el-link>
+               </el-upload>
+                <el-link   v-else target="_blank"  :underline="false">
+                   上传学期总结
+                </el-link>
               </div>
             </template>
           </el-table-column>
@@ -129,6 +142,7 @@ export default {
   data () {
     return {
       items: [], // 老师数据
+      curTeacher: {}, // 当前老师
       cnt: 0, // 总数
       size: 20, // 单页数目
       action: this.url + 'palace_teacher/upload?' + '&p_token=' + this.cookie + '&type=plan_file',
@@ -141,6 +155,7 @@ export default {
           { key: 'subject', value: null, placeholder: '选择学科' }
         ],
         searchCont: true,
+        exitBtn: true,
         placeholder: '请输入老师姓名',
         buttons: [
           { key: 'addNew', value: '新增老师' }
@@ -243,6 +258,7 @@ export default {
         // 老师数据
         // this.$set(this.items, rt.data.list)
         this.items = rt.data.list
+        this.curTeacher = rt.data.current_teacher
         for (let item of this.items) {
           if (item.subject === '3') {
             item.subjectName = '艺术综合'

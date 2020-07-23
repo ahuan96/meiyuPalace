@@ -27,13 +27,21 @@
 
           <el-table-column label="操作" width="440">
             <template slot-scope="scope">
-              <el-link type="primary"
-                :underline="false"
-                @click="toEdit(scope.row.id)">修改信息</el-link>
-              <em></em>
-              <el-link type="primary"
-                :underline="false"
-                @click="toReset(scope.row.id)">修改密码</el-link>
+
+                <template v-if="curTeacher.level == '1' || (curTeacher.id == scope.row.id) ">
+                  <el-link type="primary"
+                    :underline="false"
+                    @click="toEdit(scope.row.id)">修改信息</el-link>
+                  <em></em>
+                  <el-link type="primary"
+                    :underline="false"
+                    @click="toReset(scope.row.id)">修改密码</el-link>
+                </template>
+                <template v-else>
+                  <el-link :underline="false">修改信息</el-link>
+                  <em></em>
+                  <el-link :underline="false">修改密码</el-link>
+                </template>
               <em></em>
               <el-link type="primary"
                   :underline="false"
@@ -54,8 +62,10 @@
               </el-link>
                 <em></em>
               <el-link type="danger"
+                v-if="(curTeacher.level == '1')"
                 :underline="false"
                 @click="goDel(scope.row.id)">删除</el-link>
+              <el-link v-else :underline="false">删除</el-link>
             </template>
           </el-table-column>
         </el-table>
@@ -116,7 +126,7 @@ export default {
       items: [], // 老师数据
       cnt: 0, // 总数
       size: 20, // 单页数目
-
+      curTeacher: {}, // 当前老师
       params: { page: 1, subject: '', keywords: '' }, // 参数
 
       // 查询内容数据
@@ -125,6 +135,7 @@ export default {
           { key: 'subject', value: null, placeholder: '选择学科' }
         ],
         searchCont: true,
+        exitBtn: true,
         placeholder: '查询内容',
         buttons: [
           { key: 'addNew', value: '新增老师' }
@@ -226,6 +237,7 @@ export default {
       $rt.then((rt) => {
         // 老师数据
         this.items = rt.data.list
+        this.curTeacher = rt.data.current_teacher
         this.cnt = rt.data.cnt
         // this.size = rt.data.pagesize 默认20
 

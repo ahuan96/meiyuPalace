@@ -114,6 +114,8 @@
         v-html="item.value"
         v-for="item of searchData.buttons"
         v-if="searchData.buttons"></el-button>
+
+         <span v-if="searchData.exitBtn" class="exit-btn" @click="exit">退出登录</span>
     </li>
   </ul>
 </template>
@@ -205,6 +207,22 @@ export default {
       files.model = files.placeholder
 
       this.$emit(files.key, v)
+    },
+    /**
+    * [exit 退出登录]
+    * @return {[]} []
+    */
+    exit () {
+      var keys = document.cookie.match(/[^ =;]+(?==)/g)
+      if (keys) {
+        for (var i = keys.length; i--;) {
+          document.cookie = keys[i] + '=0;path=/;expires=' + new Date(0).toUTCString() // 清除当前域名下的,例如：m.ratingdog.cn
+          document.cookie = keys[i] + '=0;path=/;domain=' + document.domain + ';expires=' + new Date(0).toUTCString() // 清除当前域名下的，例如 .m.ratingdog.cn
+          document.cookie = keys[i] + '=0;path=/;domain=xinzhimeiyu.com;expires=' + new Date(0).toUTCString() // 清除一级域名下的或指定的，例如 .ratingdog.cn
+        }
+        const loginUrl = this.url + 'login/palace'
+        window.location.href = loginUrl
+      }
     }
   },
   created () {

@@ -70,26 +70,10 @@ const href = window.location.href
 if (href.indexOf('localhost') > -1) {
   Vue.prototype.url = 'http://test.laoshi.xinzhimeiyu.com/'
   // Vue.prototype.cookie = '9e5dIGEjTrBpvWcC1gxFhcBBHEilpjMAYutllecgJahIDYYS'
-  // var user = {
-  //   id: '15',
-  //   level: '1',
-  //   name: '少年宫老师',
-  //   subject: '3',
-  //   tel: '18812345678',
-  //   school_id: '15',
-  //   username: 'p4297940'
-  // }
+
   Vue.prototype.cookie = '10aeWXuDdQ2wQfAskg6DghUh8b9WLKzZnS7pKipl6QgtoYI'
-  var user = {
-    id: '27',
-    level: '1',
-    name: '45',
-    subject: '3',
-    tel: '12345678912',
-    school_id: '8',
-    username: 'p9252749'
-  }
-  localStorage.setItem('user', JSON.stringify(user))
+
+  // Vue.prototype.cookie = '3a11v5EWc6hKMEpJbasuOTYT63oGD7hwKuj7UglrKx%2Bv3FYs'
   console.log(988)
 } else if (href.indexOf('test') > -1) {
   Vue.prototype.url = 'http://test.laoshi.xinzhimeiyu.com/'
