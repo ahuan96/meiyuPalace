@@ -27,6 +27,14 @@
         </el-col>
       </el-form-item>
 
+      <el-form-item label="课程类别" prop="category">
+        <el-col
+          :span="20">
+          <el-input type="text"
+          v-model="formData.category"></el-input>
+        </el-col>
+      </el-form-item>
+
       <el-form-item label="联系电话" prop="tel">
         <el-col
           :span="20">

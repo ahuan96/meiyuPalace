@@ -122,9 +122,11 @@ export default {
     }
   },
   created () {
+    console.log(11)
     let $rt = this.$get('palace_teacher/details', {})
     // 用户信息
     $rt.then(rt => {
+      console.log(12)
       const info = rt.data.details
       window.Global.userinfo = info
       console.log('info', info, window.Global.userinfo)

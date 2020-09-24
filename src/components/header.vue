@@ -68,8 +68,8 @@ export default {
      * @return {[]} []
      */
     loginOut () {
-      const loginUrl = this.url.replace('laoshi', 'login')
-      location.href = loginUrl
+      let loginUrl = this.url + 'login/palace'
+      window.location.href = loginUrl
     }
   },
   created () {

@@ -22,6 +22,7 @@
           </el-table-column>
 
           <el-table-column label="科目" prop="subjectName"></el-table-column>
+          <el-table-column label="类别" prop="category"></el-table-column>
 
           <el-table-column label="联系电话" prop="tel"></el-table-column>
 
@@ -151,6 +152,7 @@ export default {
         subject: '',
         synopsis: '',
         idcard: '',
+        category: '',
         name: '',
         password: '',
         pwd2: '',
@@ -162,6 +164,7 @@ export default {
         ['select', { list: null }],
         ['cont', {}],
         ['idcard', {}],
+        ['cont', {}],
         ['name', {}],
         ['password', {}],
         ['password', {}],
@@ -172,6 +175,7 @@ export default {
       formDataEdit: {
         id: undefined,
         subject: '',
+        category: '',
         name: '',
         tel: '',
         idcard: '',
@@ -189,6 +193,7 @@ export default {
       // 表单编辑验证
       formRuleEdit: [
         ['select', { list: null }],
+        ['cont', {}],
         ['name', {}],
         ['tel', {}],
         ['idcard', {}],

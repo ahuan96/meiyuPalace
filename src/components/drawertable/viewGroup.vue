@@ -1,5 +1,5 @@
 <template>
-  <el-drawer size="70%" title="查看社团详情" direction="rtl" oncontextmenu="return false" onselectstart="return false"
+  <el-drawer size="70%" title="社团评分详情" direction="rtl" oncontextmenu="return false" onselectstart="return false"
     :visible.sync="isShowing"
     v-if="isShowing">
     <div class="demo-drawer__content" style="bottom:0">
@@ -21,13 +21,13 @@
 
               <el-table-column label="社团实践分" prop="point" width="120">
                 <template slot-scope="scope">
-                  <input :class="!isMe?'disabled_input':''" type="text" :disabled="!isMe"  :value=scope.row.point @change="ChangePoint($event,scope.row)" class="el-input__inner" placeholder="请输入分数">
+                  <input :class="!isMe?'disabled_input':''" type="text" :disabled="!isMe || state == '-1'"  :value=scope.row.point @change="ChangePoint($event,scope.row)" class="el-input__inner" placeholder="请输入分数">
                 </template>
               </el-table-column>
 
               <el-table-column label="备注" prop="remark" width="150">
                 <template slot-scope="scope">
-                  <input :class="!isMe?'disabled_input':''" type="text" :disabled="!isMe" :value=scope.row.remark @change="ChangeRemark($event,scope.row)" class="el-input__inner" placeholder="请输入备注">
+                  <input :class="!isMe?'disabled_input':''" type="text" :disabled="!isMe || state == '-1'" :value=scope.row.remark @change="ChangeRemark($event,scope.row)" class="el-input__inner" placeholder="请输入备注">
                 </template>
               </el-table-column>
             </el-table>
@@ -96,6 +96,7 @@ export default {
       point: '',
       remark: '',
       org_id: '',
+      state: '',
       params: { page: 1, select_edu_stage: '', year: '', room_id: '', searchKey: '' }, // 参数
 
       // 查询内容数据
@@ -191,6 +192,7 @@ export default {
         this.cnt = rt.data.cnt
         this.size = rt.data.pagesize
         this.org_id = rt.data.data.id
+        this.state = rt.data.data.state
         for (let item of this.items) {
           let i = this.items.indexOf(item)
           this.items[i].grade = this.items[i].grade + '年级'

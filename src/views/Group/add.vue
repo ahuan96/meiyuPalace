@@ -180,16 +180,20 @@
         <div class="m-cont">{{formData.organization}}</div>
      </div>
   </el-dialog>
+  <!-- 预览 -->
+  <avtivity-preview ref="ystable1" ></avtivity-preview>
   </div>
 </template>
 
 <script>
 import mixform from '@/components/mixin/form'
 import { mapGetters } from 'vuex'
+import avtivityPreview from '@/components/drawertable/avtivityPreview'
 
 export default {
   mixins: [mixform],
   components: {
+    avtivityPreview
   },
   props: [
   ],
@@ -569,10 +573,21 @@ export default {
       console.log(res)
       this.formData.img_url = res.data.img_path
     },
+    isImage (fileName) {
+      if (typeof fileName !== 'string') return
+      let name = fileName.toLowerCase()
+      return name.endsWith('.png') || name.endsWith('.jpeg') || name.endsWith('.jpg')
+    },
     beforeAvatarUpload (file) {
+      let type = this.isImage(file.name)
+      if (!type) {
+        this.$message.error('图片上传只支持jpg,jpeg,png格式')
+        return false
+      }
       const isLt = file.size / 1024 / 1024 < 10
       if (!isLt) {
         this.$message.error('图片大小不能超过 10MB!')
+        return false
       }
       this.url_name = Date.parse(new Date()) + file.name
       return isLt
@@ -634,7 +649,10 @@ export default {
             })
           })
           this.class_list = classList
-          this.dialogVisible = true
+          // this.dialogVisible = true
+          let formData = Object.assign({}, this.formData)
+          formData.bm_end = this.$timeformat(formData.bm_end, 1)
+          this.$refs.ystable1.initial({formData: formData, class_list: this.class_list})
         }
       })
     }

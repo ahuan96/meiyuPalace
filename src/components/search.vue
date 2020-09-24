@@ -94,7 +94,7 @@
     </li>
 
     <li class="last"
-      v-if="searchData.buttons || searchData.files">
+      v-if="searchData.buttons || searchData.files || searchData.exitBtn">
       <el-select
         :placeholder="searchData.files.placeholder"
         v-model="searchData.files.model"

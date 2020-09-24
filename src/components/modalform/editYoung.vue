@@ -17,7 +17,13 @@
             v-if="v.id !== '-2'">{{v.name}}</el-radio-button>
         </el-radio-group>
       </el-form-item>
-
+      <el-form-item label="课程类别" prop="category">
+        <el-col
+          :span="20">
+          <el-input type="text"
+          v-model="formData.category" placeholder="例如：古筝、舞蹈、书法等"></el-input>
+        </el-col>
+      </el-form-item>
       <el-form-item label="老师姓名" prop="name">
         <el-col
           :span="20">
@@ -125,12 +131,15 @@ export default {
     },
     askDatas () {
       let $rt = this.$get(this.formSubmit.info, {id: this.formData.id})
+      if (this.$refs['elform']) {
+        this.$refs['elform'].resetFields()
+      }
       $rt.then(rt => {
         console.log(rt)
         const keys = Object.keys(this.formData)
         console.log(keys)
         for (let k of keys) {
-          if (rt.data.details && rt.data.details[k]) this.formData[k] = rt.data.details[k]
+          if (rt.data.details) this.formData[k] = rt.data.details[k]
         }
         console.log(this.formData)
       })

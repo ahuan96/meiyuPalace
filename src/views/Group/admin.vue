@@ -12,7 +12,13 @@
           :data="items">
           <el-table-column label="编号" prop="id" width="80" fixed></el-table-column>
 
-          <el-table-column label="社团名称" prop="name" min-width="120" fixed></el-table-column>
+          <el-table-column label="社团名称" prop="name" min-width="120" >
+             <template slot-scope="scope">
+               <el-link type="primary"
+                :underline="false"
+                @click="seeView(scope.row)">{{scope.row.name}}</el-link>
+             </template>
+          </el-table-column>
 
           <el-table-column label="招募范围" prop="className" min-width="300">
             <template slot-scope="scope">
@@ -66,7 +72,7 @@
                v-if="scope.row.state === '-1'||scope.row.state === '2'">
                <el-link type="primary"
                 :underline="false"
-                @click="toLook(scope.row.id,scope.row.isMe)">查看社团</el-link>
+                @click="toLook(scope.row.id,scope.row.isMe)">社团评分</el-link>
               </template>
               <template
                v-if="scope.row.state === '2'&&scope.row.isMe">
@@ -119,19 +125,26 @@
     <ys-modal-table-check ref="ystable3"
       :tableData="tableDataCheck"
       :tableDetail="tableDetailCheck"></ys-modal-table-check>
+
+    <!-- 预览 -->
+    <avtivity-preview ref="ystable1" ></avtivity-preview>
+
   </div>
+
 </template>
 
 <script>
 import ysDrawerTable from '@/components/drawertable/viewGroup'
 import ysDrawerTableKaoqin from '@/components/drawertable/addGroupKaoqin'
 import ysModalTableCheck from '@/components/modaltable/groupStudent'
+import avtivityPreview from '@/components/drawertable/avtivityPreview'
 
 export default {
   components: {
     ysDrawerTable,
     ysDrawerTableKaoqin,
-    ysModalTableCheck
+    ysModalTableCheck,
+    avtivityPreview
   },
   props: [
   ],
@@ -397,6 +410,11 @@ export default {
         this.askDatas()
       }).catch((rt) => {
       })
+    },
+    // 查看预览
+    seeView (item) {
+      console.log(item)
+      this.$refs.ystable1.initial({formData: item, class_list: item.className})
     }
   },
   created () {

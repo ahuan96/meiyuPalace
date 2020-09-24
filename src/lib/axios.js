@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { Loading } from 'element-ui'
 
-let href = window.location.href
-let loginUrl = 'http://laoshi.xinzhimeiyu.com/login/palace'
-if (href.indexOf('test') > -1) {
-  loginUrl = 'http://test.laoshi.xinzhimeiyu.com/login/palace'
-}
+// let href = window.location.href
+// let loginUrl = 'http://laoshi.xinzhimeiyu.com/login/palace'
+// if (href.indexOf('test') > -1) {
+//   loginUrl = 'http://test.laoshi.xinzhimeiyu.com/login/palace'
+// }
 
 /**
  * [request Request拦截器]
@@ -86,7 +86,7 @@ export function post (url, params = {}, urlparams = {}) {
         if (rt.err_code === 0) {
           resolve(res.data)
         } else if (rt.err_code === 20) {
-          window.location.href = loginUrl
+          // window.location.href = loginUrl
         } else {
           reject(rt)
           this.$err(rt.msg)
@@ -138,7 +138,7 @@ export function get (url, params = {}) {
         if (rt.err_code === 0) {
           resolve(res.data)
         } else if (rt.err_code === 20) {
-          window.location.href = loginUrl
+          // window.location.href = loginUrl
         } else {
           reject(rt)
           this.$err(rt.msg)

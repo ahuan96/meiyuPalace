@@ -3,6 +3,7 @@
     <div class="r-header">
            <button ><a href="/static/palace/file/泉州教学计划模板.xls" download="教学计划模板.xls">下载教学计划模板</a></button>
            <button ><a href="/static/palace/file/泉州教学年度总结.xls" download="学期总结模板.xls">下载学期总结模板</a></button>
+           <span v-if="searchData.exitBtn" class="exit-btn" @click="loginOut">退出登录</span>
     </div>
     <div class="main long">
       <div class="mid">
@@ -21,6 +22,8 @@
           </el-table-column>
 
           <el-table-column label="科目" prop="subjectName"></el-table-column>
+
+          <el-table-column label="类别" prop="category"></el-table-column>
 
           <el-table-column label="联系电话" prop="tel"></el-table-column>
 
@@ -192,6 +195,7 @@ export default {
       formDataEdit: {
         id: undefined,
         subject: '',
+        category: '',
         name: '',
         tel: '',
         idcard: '',
@@ -201,6 +205,7 @@ export default {
       formDataView: {
         admin_id: undefined,
         subject: '',
+        category: '',
         name: '',
         tel: '',
         idcard: '',
@@ -209,6 +214,7 @@ export default {
       // 表单编辑验证
       formRuleEdit: [
         ['select', { list: null }],
+        ['cont', {}],
         ['name', {}],
         ['tel', {}],
         ['idcard', {}],
@@ -334,6 +340,14 @@ export default {
       this.params.page = p
       this.askDatas()
     },
+    /**
+     * [loginOut 退出登录]
+     * @return {[]} []
+     */
+    loginOut () {
+      let loginUrl = this.url + 'login/palace'
+      window.location.href = loginUrl
+    },
 
     /**
      * [paramsChange 切换查询条件]
@@ -433,3 +447,11 @@ export default {
   }
 }
 </script>
+<style scoped>
+.exit-btn {
+    line-height: 1.65rem;
+    margin-left: 1rem;
+    color: #5E9EEB;
+    cursor: pointer;
+}
+</style>

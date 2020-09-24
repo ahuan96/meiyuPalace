@@ -69,12 +69,15 @@ Vue.component('ysModalConfirm', ysModalConfirm)
 const href = window.location.href
 if (href.indexOf('localhost') > -1) {
   Vue.prototype.url = 'http://test.laoshi.xinzhimeiyu.com/'
-  // Vue.prototype.cookie = '9e5dIGEjTrBpvWcC1gxFhcBBHEilpjMAYutllecgJahIDYYS'
+  Vue.prototype.cookie = '9e5dIGEjTrBpvWcC1gxFhcBBHEilpjMAYutllecgJahIDYYS'
+  // Vue.prototype.cookie = '1f29O6nxYO7hjMqTZvanxQJmzSvEuTf%2Bl7p%2BOu9SzmbFKxU'
 
-  Vue.prototype.cookie = '10aeWXuDdQ2wQfAskg6DghUh8b9WLKzZnS7pKipl6QgtoYI'
+  // Vue.prototype.cookie = '10aeWXuDdQ2wQfAskg6DghUh8b9WLKzZnS7pKipl6QgtoYI'
 
   // Vue.prototype.cookie = '3a11v5EWc6hKMEpJbasuOTYT63oGD7hwKuj7UglrKx%2Bv3FYs'
-  console.log(988)
+  // Vue.prototype.cookie = '48e4um1KPge4zkGx5fReVat5dycEMco8Q%2FJNnHUzK57cHK9N'
+  // Vue.prototype.cookie = '053do4MV%2FUrhPhlbSZabvPgNxxS9Tbcns7x5aOo%2F5hBf0Wk'
+  // Vue.prototype.cookie = 'c89bCT889wTVo%2FxbKMBV2xYDev%2F3bCODd%2Flxq5VZCDCvwrM'
 } else if (href.indexOf('test') > -1) {
   Vue.prototype.url = 'http://test.laoshi.xinzhimeiyu.com/'
   Vue.prototype.cookie = getcookie('test_p_token')
