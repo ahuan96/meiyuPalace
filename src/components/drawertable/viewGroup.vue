@@ -21,13 +21,13 @@
 
               <el-table-column label="社团实践分" prop="point" width="120">
                 <template slot-scope="scope">
-                  <input :class="!isMe?'disabled_input':''" type="text" :disabled="!isMe || state == '-1'"  :value=scope.row.point @change="ChangePoint($event,scope.row)" class="el-input__inner" placeholder="请输入分数">
+                  <input :class="(!isMe || state == '-1')?'disabled_input':''" type="text" :disabled="!isMe || state == '-1'"  :value=scope.row.point @change="ChangePoint($event,scope.row)" class="el-input__inner" placeholder="请输入分数">
                 </template>
               </el-table-column>
 
               <el-table-column label="备注" prop="remark" width="150">
                 <template slot-scope="scope">
-                  <input :class="!isMe?'disabled_input':''" type="text" :disabled="!isMe || state == '-1'" :value=scope.row.remark @change="ChangeRemark($event,scope.row)" class="el-input__inner" placeholder="请输入备注">
+                  <input :class="(!isMe || state == '-1')?'disabled_input':''" type="text" :disabled="!isMe || state == '-1'" :value=scope.row.remark @change="ChangeRemark($event,scope.row)" class="el-input__inner" placeholder="请输入备注">
                 </template>
               </el-table-column>
             </el-table>
